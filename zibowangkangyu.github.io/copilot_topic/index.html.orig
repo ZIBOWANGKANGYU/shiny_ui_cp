@@ -1,0 +1,670 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.15.2 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>GitHub Copilot seem hesitant? Could be AI safety and fairness measures! - Mark Wang</title>
+<meta name="description" content="artificial intelligence, large language models, safety and security">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Mark Wang">
+<meta property="og:title" content="GitHub Copilot seem hesitant? Could be AI safety and fairness measures!">
+<meta property="og:url" content="https://zibowangkangyu.github.io/copilot_topic/">
+
+
+  <meta property="og:description" content="artificial intelligence, large language models, safety and security">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2024-05-16T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://zibowangkangyu.github.io/copilot_topic/">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Mark Wang's projects",
+      "url": "https://zibowangkangyu.github.io",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Mark Wang Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">Mark Wang</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/images/Mark_profile.png" alt="Mark Wang" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mark Wang</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        R developer with data science experience in finance, econometrics and consulting. I am proficient in machine learning, time series and geospatial modeling, natural language processing, and applied economics research.
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, ON</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/ZIBOWANGKANGYU" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:kangyumarkwang@gmail.com">
+            <meta itemprop="email" content="kangyumarkwang@gmail.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://www.linkedin.com/in/kmarkwang" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="GitHub Copilot seem hesitant? Could be AI safety and fairness measures!">
+    <meta itemprop="description" content="artificial intelligence, large language models, safety and security">
+    <meta itemprop="datePublished" content="May 16, 2024">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">GitHub Copilot seem hesitant? Could be AI safety and fairness measures!
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  4 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Generative Artificial Intelligence (genAI) has become an indispensable part of software and analytics development. As an R developer working with data analytics, visualization and computation optimization, 
+I use tools like GitHub Copilot every day to improve my productivity and automate routine tasks. Recently, I have witnessed cases where Copilot seems to stop working, and after investigation, the reason, I believe, is 
+the underlying genAI’s safety measures that restrict certain kinds of outputs.</p>
+
+<p>It requires the utmost care to use the most power tools responsibly, and developers and analysts who use genAI tools should be aware of such safety measures and understand its implications. More importantly, on the top of safety measures included in the genAI, we should stay vigilant and take time to reflect: will my use of genAI create danger, harm or bias?</p>
+
+<h2 id="why-has-my-copilot-stopped-working">Why has my Copilot stopped working?</h2>
+
+<p>As an example, I create a few helper functions to analyze demographic data of some Canadian cities in R. GitHub Copilot is extremely powerful for such tasks:</p>
+
+<pre><code class="language-{R}">library(tibble)
+
+demo_data &lt;- tibble(
+
+  city = c("Toronto", "Montreal", "Vancouver", "Calgary", "Ottawa"),
+
+  population = c(2731571, 1704694, 631486, 1237656, 934243),
+
+  median_age = c(37.1, 39.3, 40.8, 36.6, 39.4),
+
+  median_income = c(34500, 32000, 30000, 35000, 33000),
+
+  immigrant_percent = c(46.1, 31.4, 40.8, 30.2, 23.6),
+
+  university_percent = c(30.3, 25.4, 35.6, 28.7, 27.8),
+
+  transgender_percent = c(0.5, 0.3, 0.4, 0.2, 0.1),
+
+  data_scientist_percent = c(0.1, 0.2, 0.3, 0.4, 0.5)
+
+)
+</code></pre>
+
+<p>I want to create functions that extract one aspect of information, for example, percentage of university-educated individuals, for selected cities. For example, I want to create a <code class="language-plaintext highlighter-rouge">get_population</code> function that does the following:</p>
+
+<pre><code class="language-{R}">
+get_population("Toronto")
+
+# A tibble: 1 × 2
+  city    population
+  &lt;chr&gt;        &lt;dbl&gt;
+1 Toronto    2731571
+
+</code></pre>
+
+<p>With very limited prompt, CoPilot is doing a great job creating functions for population, age and income:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4Y2ti_G-73E" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<p>The three functions created are all correct:</p>
+
+<p><code class="language-plaintext highlighter-rouge">get_population</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">get_median_age</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">get_median_income</code></p>
+
+<p>Copilot is really smart, right? In my experience, this is the least Copilot can do for you in programming.</p>
+
+<p>Now we move on to the percentage of immigrants. As you can see below, Copilot suddenly seems reluctant to suggest anything:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8xW1G19aX_o" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<p>Specifically, Copilot is “stuck” at three places. One is after “should return the percentage of”, following which should be the word “immigrants”. Instead, I had to type it out myself. Two is after the first part of the function name “get_”, following which should be “immigrant_percent”. Again, I had to type it out myself. Three is after the <code class="language-plaintext highlighter-rouge">select</code> function, which should be <code class="language-plaintext highlighter-rouge">(city, immigrant_percent)</code>.</p>
+
+<p><strong>What is going on here?</strong> Has Copilot suddenly become less smart? Let us continue with creating the rest of functions.</p>
+
+<p><strong>Woohoo!</strong> Copilot is smart again! As you can see, Copilot had no problem creating the fifth function, <code class="language-plaintext highlighter-rouge">get_university_percent</code>, correctly.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xpWXbAeKSYw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<p>What about the percentage of transgender individuals? <strong>Again, Copilot seems stuck</strong>. GitHub seems reluctant to proceed at three places:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/t4-MH_2Mbk0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<ul>
+  <li>
+    <p>At function description, after “should return the percentage of”. We need the phrase “transgender individuals”.</p>
+  </li>
+  <li>
+    <p>Name of the function, which should be “get_transgender_percent”</p>
+  </li>
+  <li>
+    <p>In the <code class="language-plaintext highlighter-rouge">select</code> function, which should be <code class="language-plaintext highlighter-rouge">(city, transgender_percent)</code></p>
+  </li>
+</ul>
+
+<p>We are beginning to see that <strong>keywords</strong> (“immigrant” and “transgender”) are playing an important role here. An alternative hypothesis is that while population, age, income and education are commonly analyzed demographic characteristics, immigration status and gender identity are less commonly studied. If this is indeed the case, Copilot should also have difficulty creating a function analyzing the percentage of data scientists. Whether somebody works in data science is not a question asked in Canadian censuses, but immigration status is.</p>
+
+<p>It turns out this is not the case. Copilot had zero problem creating <code class="language-plaintext highlighter-rouge">get_data_scientist_percent</code>.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3RMUFhcG998" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<h2 id="safety-and-fairness-in-genai-models-how-does-it-impact-my-development-work">Safety and fairness in genAI models: how does it impact my development work?</h2>
+
+<p>GitHub Copilot’s model provider, OpenAI, has made <a href="https://openai.com/index/moving-ai-governance-forward/">statements</a> about improving the safety, security and trustworthiness of AI. Although I cannot be 100% sure what is behind Copilot’s hesitation, it definitely makes sense to have safety measures on certain topics to avoid societal harm. This is especially important when heated words on the internet are dividing our societies or even inciting violence.</p>
+
+<p>In the example above, the behaviour of Copilot is easily identifiable and understandable. However, as more tasks, and especially higher-level tasks are delegated to genAI in software development, safety and fairness measures also work in less obvious ways. This requires developers, as AI users, to have a strong understanding of how AI safety measures work. As we use Copilot to write codes, don’t forget to ask the following questions:</p>
+
+<ul>
+  <li>
+    <p>Does part of my development / analytical project have risks in terms of safety, security, societal harm and fairness?</p>
+  </li>
+  <li>
+    <p>Does Copilot seem to behave oddly at part of my project? Could AI safety measures be at play?</p>
+  </li>
+  <li>
+    <p>Does Copilot seem to ignore part of your data? Does such data have privacy, safety, ethics or fairness concerns?</p>
+  </li>
+</ul>
+
+<h2 id="beyond-safety">Beyond safety</h2>
+
+<p>Safety, security and fairness in AI systems are important and complex topics, which, we as users of genAI, should nonetheless keep in mind. In the example above, Copilot’s hesitation mitigates risks due to genAI having a harmful output, but it also creates risks due to <strong>genAI not having a good output</strong>.</p>
+
+<ul>
+  <li>
+    <p>Will valuable information about disadvantaged groups of people, for example immigrants or transgender individuals, be kept unattended due to AI safety measures?</p>
+  </li>
+  <li>
+    <p>Will projects dedicated to disadvantaged groups of people receive less support from AI due because they are deemed sensitive or risky?</p>
+  </li>
+</ul>
+
+<p>As genAI rapidly becomes more powerful and widely used, these questions will also demand answers.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#artificial-intelligence" class="page__taxonomy-item" rel="tag">artificial intelligence</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#large-language-models" class="page__taxonomy-item" rel="tag">large language models</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#safety-and-security" class="page__taxonomy-item" rel="tag">safety and security</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-05-16T00:00:00+00:00">May 16, 2024</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=GitHub+Copilot+seem+hesitant%3F+Could+be+AI+safety+and+fairness+measures%21%20https%3A%2F%2Fzibowangkangyu.github.io%2Fcopilot_topic%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fzibowangkangyu.github.io%2Fcopilot_topic%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fzibowangkangyu.github.io%2Fcopilot_topic%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/Evaluation_metrics/" class="pagination--pager" title="Evaluation Metrics for Binary Classification in Machine Learning: When Accuracy Score Is Not Enough
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Evaluation_metrics/" rel="permalink">Evaluation Metrics for Binary Classification in Machine Learning: When Accuracy Score Is Not Enough
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  4 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">machine learning, binary classification
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Infodemic/" rel="permalink">Combating America’s Other Infodemic
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  8 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">python, regressions, COVID-19
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Vancouver_transit_summary/" rel="permalink">Public Transportation in Vancouver: Suggestions from Machine Learning Models
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">GIS, Python, transit
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Vancouver_transit4/" rel="permalink">Demographic Characteristics and Access to Public Transit in Greater Vancouver: Analyses and Recommendations
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  19 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">GIS, Python, transit
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2024 Mark Wang's projects. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+<script src="/assets/js/main.min.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js"
+  integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+  </body>
+</html>

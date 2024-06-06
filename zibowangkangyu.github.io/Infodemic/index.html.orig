@@ -1,0 +1,691 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.15.2 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Combating America’s Other Infodemic - Mark Wang</title>
+<meta name="description" content="python, regressions, COVID-19">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Mark Wang">
+<meta property="og:title" content="Combating America’s Other Infodemic">
+<meta property="og:url" content="https://zibowangkangyu.github.io/Infodemic/">
+
+
+  <meta property="og:description" content="python, regressions, COVID-19">
+
+
+
+  <meta property="og:image" content="https://zibowangkangyu.github.io/images/Infodemic.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-01T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://zibowangkangyu.github.io/Infodemic/">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Mark Wang's projects",
+      "url": "https://zibowangkangyu.github.io",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Mark Wang Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">Mark Wang</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+  
+
+
+
+
+
+
+
+
+
+
+
+<div class="page__hero"
+  style=" "
+>
+  
+    <img src="/images/Infodemic.png" alt="Combating America’s Other Infodemic" class="page__hero-image">
+  
+  
+</div>
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/images/Mark_profile.png" alt="Mark Wang" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mark Wang</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        R developer with data science experience in finance, econometrics and consulting. I am proficient in machine learning, time series and geospatial modeling, natural language processing, and applied economics research.
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, ON</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/ZIBOWANGKANGYU" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:kangyumarkwang@gmail.com">
+            <meta itemprop="email" content="kangyumarkwang@gmail.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://www.linkedin.com/in/kmarkwang" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Combating America’s Other Infodemic">
+    <meta itemprop="description" content="python, regressions, COVID-19">
+    <meta itemprop="datePublished" content="March 01, 2021">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Combating America’s Other Infodemic
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  8 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>This projects won the First Place Prize at 2021 West Coast Regional Datathon sponsored by Citadel and CItadel Securities and Correlation One. The GitHub repository of this project can be found <a href="https://github.com/Twenty-One-Spring-Citadel-WestCoast/Datathon">here</a>. I am honored to have worked with three fantastic team members <a href="https://www.linkedin.com/in/ben-huckell/">Ben</a>, <a href="https://www.linkedin.com/in/jskzhou/">Jason</a> and <a href="https://www.linkedin.com/in/zhipeng-peter-ye/">Peter</a>.</p>
+
+<p>The submitted version of the report can be downloaded <a href="https://github.com/Twenty-One-Spring-Citadel-WestCoast/Datathon/raw/main/team_2_report.pdf">here</a>.</p>
+
+<h2 id="summary-misconception-misinformation-and-covid-19-pandemic-control">Summary: misconception, misinformation and COVID-19 pandemic control</h2>
+
+<p>Since the beginning of the pandemic, governments and technology companies around the world have prioritized combating false information about the COVID-19, along with public health measures, to ensure that people take adequate caustion and change their behavior to slow down the spread of the virus. In this project, we demontrated strong statistical relationships between people’s increased physical mobility and worse outcomes of COVID, as measured by infection, hospitalization and death at the state level. Moreover, we discovered that the incorrect information problem to COVID-19 containment turns our to be broader than misinformation from social or traditional media and extends to a lack of basic knowledge about the cause, spread and prevention of COVID-19 (misconception). Misconception is associated with higher non-essential mobility and worse disease outcomes.</p>
+
+<p>Based on our models, we identified US states where, by geographic and demographic characters, where people are most vulnerable to the COVID-19 misconception or misinformation. We believe that the dissemination of correct information to people who are not necessarily exposed to much misinformation from the media, but nonetheless have more misconceptions about the basics of COVID-19.</p>
+
+<h2 id="data-source-preprocessing-and-eda">Data source, preprocessing and EDA</h2>
+
+<p>We confine the time span of this study from March 2020 to January 2021.</p>
+
+<h3 id="physical-mobility">Physical mobility</h3>
+
+<p>We use people’s physical movement at non-residential venues as a measurement of compliance to pandemic containment policies in the population. Google has made public datasets on movement of people available since February 15, 2020 to help combat COVID-19. As shown in the map below, states in Southern US, along with New York and small states in the northeast saw the most dramatic drop in non-residential mobility, By contrast, states in the northwest saw little change, or even increase in non-residential mobility.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Infodemic/plots/Mobility_change.png" alt="Map: Mobility change" /></p>
+
+<p>It turns out that in addition to differences in strictness of government policies and levels of compliance, Google Mobility data should also be used along with temperature and urbanization rate to get a more accurate picture. The baseline data was taken in January/February 2020, and residents of northern and colder states are naturally more stagnant during the winter months, and are thus more likely to be more mobile in the summer period. In addition, rural and urban residents also show different movement patterns. Therefore, as part of regression analyses, we have included a state’s average temperature and urbanization rate whenever the physical movement data is used.</p>
+
+<h3 id="misconception-and-exposure-to-misinformation">Misconception and exposure to misinformation</h3>
+
+<p>Using survey data from <a href="https://covidstates.org/">CovidStates</a>, we constructed indicators, we constructed the following two indicators:</p>
+
+<ul>
+  <li>Misconceptions about COVID-19. It is measured as the average proportion of false statements about the prevention and treatment of COVID-19 identified as correct by respondents. It appears that the southern states show much higher rates of misconceptions than the rest of the country.</li>
+</ul>
+
+<p><img src="https://zibowangkangyu.github.io/images/Infodemic/plots/Misconception_map.png" alt="Map: Misconceptions" /></p>
+
+<ul>
+  <li>Exposure to misinformation from social and traditional media. We took the average prevalence of false information by media source, weighted by the amount of usage of each media source for COVID-19 related information. Overall, we can see quite clearly that there are general trends between misinformation and misconceptions. Both southern states, and states with major metropolitan centers including California and New York, are more exposed to COVID-19 misinformation.</li>
+</ul>
+
+<p><img src="https://zibowangkangyu.github.io/images/Infodemic/plots/Misinformation_map.png" alt="Map: Misinformation" /></p>
+
+<p>As shown in the bar-chart below, social media platforms, especially Instagram and YouTube, have higher high proportion of COVID-related information that is false. More urbanized areas such as Washington DC, California and New York
+have significantly higher proportion of residents who get information about COVID-19 from such sources, and are thus exposed to misinformation. By contrast, more rural states, like Wyoming and Vermont, are less exposed to Instagram and YouTube (levels of Facebook and traditional news usage are similar), and are thus less exposed to misinformation from the media.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Infodemic/plots/Misinformation_chart.png" alt="Chart: Misinformation" />
+<img src="https://zibowangkangyu.github.io/images/Infodemic/plots/Misinformation_chart_2.png" alt="Chart: Misinformation 2" /></p>
+
+<h3 id="covid-epidemiologies">COVID epidemiologies</h3>
+
+<p><a href="https://covidtracking.com/">The Covid Tracking Project</a>, which has fortunately ended in March 2021, provides fantastic daily COVID pidemiological data at the U.S. state level. Key statistics that we used include:</p>
+
+<ul>
+  <li>
+    <p>New Deaths for each day</p>
+  </li>
+  <li>
+    <p>New Hospitalizations for each day</p>
+  </li>
+  <li>
+    <p>Current number of patients in ICU for each day</p>
+  </li>
+  <li>
+    <p>Current number of patients on ventilator</p>
+  </li>
+  <li>
+    <p>Test positivity rate for each day</p>
+  </li>
+</ul>
+
+<h3 id="government-pandemic-control-measures">Government pandemic control measures</h3>
+
+<p>we collected data about government restrictions to control the spread of COVID-19 at the state level, from the <a href="https://www.bsg.ox.ac.uk/research/research-projects/covid-19-government-response-tracker">Covid-19 Policy Responses project</a> run by Blavatnik School of Government, Oxford University. The dataset tracks closure of venues, cancellation of events, restrictions on gathering, stay-at-home orders, and
+restrictions on domestic and international movement.</p>
+
+<h3 id="demographics">Demographics</h3>
+
+<p>We compiled demographic data at the state level, covering characterstics including education, temperature, urbanization, age, race and economics, from a variety of sources. We want to find out what demographic features are associated to misconceptions about COVID-19 and exposure to COVID-19 misinformation.</p>
+
+<h2 id="modelling">Modelling</h2>
+
+<p>We are aware that there are many factors contributing to the COVID outcomes and simply linking the misinformation to the COVID through regression at high level may involve too much Omitted Variable Bias (OVB) and undermine causal relationship we want to investigate. Therefore, we would like to stay focused on proving one logical chain that we believe to be both important and interesting with statistical measures. In order to do so, we separated the whole process into steps: first we analyze COVID-Mobility relationship and then we investigate Mobility-Misinformation relationship. To be rigorous, we also investigated COVID-Misinformation relationship and included in the  mobility-Misinformation section.</p>
+
+<h3 id="impact-of-moblity-on-covid-spread">Impact of moblity on COVID spread</h3>
+
+<p>We applied panel regression to analyzing the relationship between mobility and the spread of COVID at the state level. To avoid the inverse causal relationship between mobility and COVID, we used 90 days leading techniques on dependent variables (COVID metrics). We are also aware of the multi-collinearity problem in our mobility features, and we therefore applied Principle Component Analysis (PCA) to summarize all the mobility features (capturing 87%
+vairance), and run the regression again, in addition to regressions on individual mobility features.</p>
+
+<p>The models again shows statistical significance in the coefficient and proved the relationship between Mobility Index and the COVID statistics. More physical activities in non-essential lead to more infections of COVID-19.</p>
+
+<h3 id="misconceptions-misinformation-and-disease-outcomes">Misconceptions, misinformation and disease outcomes</h3>
+
+<p>Due to a lack of panel data on misconceptions, misinformation and disease outcomes, We used cross-sectional regression to explore the relationship between misconceptions, misinformation and disease outcomes. As shown in the following table, the positive relationship between COVID-19 misconceptions and severity of disease outcomes hold. Also interesting is the fact that although misconceptions are related to worse disease outcomes, exposure to misinformation from media sources does not have a significant impact on disease outcomes.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Infodemic/plots/Misinformation_regression.png" alt="Chart: Misinformation regression" /></p>
+
+<p>Through what mechanism does misconceptions and exposure to misinformation impact COVID-19 disease outcomes? We have found evidence to suggest that people who have more misconceptions about COVID-19 are less mindful about reducing physical movement. As shown in the following table, without controlling for level of strictness at each state, misconceptions are associated with more movement in non-residential areas. After controlling for strictness of government measures, the positive relationship between COVID-19 misconceptions and non-residential mobility remains, but the magnificence of impact decreases.</p>
+
+<p>Also worth noting is the fact that higher exposure to media misinformation is shown to be associated with less mobility in non-residential areas. A possible explanation is that although certain media sources, especially social media platforms do contain large amount of misinformation, such information does not necessarily make people less likely to physically distance, or be careful in protecting themselves from COVID-19.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Infodemic/plots/Misinformation_regression_2.png" alt="Chart: Misinformation regression 2" /></p>
+
+<h3 id="identify-vulnerable-demographics">Identify vulnerable demographics</h3>
+
+<h4 id="misconceptions-about-covid-and-exposure-to-misinformation">Misconceptions about COVID and exposure to misinformation</h4>
+
+<p>we found that both median age and urbanization percentage both showed statistically significant (below p=0.05) negative coefficients, while percentage of population with less than a high school diploma showed a statistically significant positive coefficient. This means that old, rural regions, with significant high school dropout rates are significantly more at risk for misconceptions than the rest of the country.</p>
+
+<p>Conversely, for misinformation, we found a rather interesting different result. We found that percentage of population with less than a high school diploma, as well as percentage of population with greater than a bachelors degree, showed statistically significant positive coefficients, whereas those with only a high school diploma showed no strong directional coefficient. This means that misinformation is disproportionately affecting the lowest education levels, as well as the highest, but not those in the middle. We found this quite surprising.</p>
+
+<p>Overall, this supports our original hypothesis that misinformation and misconceptions are two different issues plaguing the United States. The visualization below shows the change in coefficients from each regression, and the results of both of these models are provided in the appendix.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Infodemic/plots/Coefficients.png" alt="Chart: Coefficients on misconceptions and misinformation" /></p>
+
+<h4 id="mobility">Mobility</h4>
+
+<p>Similarly, here we are tring to potentially identify any links between demographic characterstics and extent of mobility drop during the pandemic. In this instance, we see that the most at risk group when it comes to mobility are those that are young, living in non-urban areas, with moderate education levels. Coefficients and p-values are included below:</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Infodemic/plots/Coefficients_1.png" alt="Chart: Mobility regression" /></p>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>This analysis highlights that between exposure to misinformation and possession of misconceptions about COVID-19, the latter is observably more strongly linked to potential lack of compliance to public health measures and therefore more severe pandemic effects. We have also identified demographics that are older, more rural, less educated (no high school diploma) and more economically disadvantaged are more likely to possess misconceptions about COVID-19, and in turn demonstrate more mobility in non-essential areas, less compliance to public health measures, and suffer more severe effects from the pandemic.</p>
+
+<p>We suggest that federal and state governments and other agencies could effectively use their resources to craft more impactful measures and regulations, such as focusing on education for demographics vulnerable to misconception, while simultaneously combating digital misinformation in areas that sees more prevalence and spread. This targeted, two-pronged approach could address those most vulnerable to the pandemic, as well as prevent the formation of more misconception-vulnerable groups, ultimately alleviating the effects of not just COVID-19, but also future pandemics.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#covid-19" class="page__taxonomy-item" rel="tag">COVID-19</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">python</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#regressions" class="page__taxonomy-item" rel="tag">regressions</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-03-01T00:00:00+00:00">March 01, 2021</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Combating+America%27s+Other+Infodemic%20https%3A%2F%2Fzibowangkangyu.github.io%2FInfodemic%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fzibowangkangyu.github.io%2FInfodemic%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fzibowangkangyu.github.io%2FInfodemic%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/Vancouver_transit_summary/" class="pagination--pager" title="Public Transportation in Vancouver: Suggestions from Machine Learning Models
+">Previous</a>
+    
+    
+      <a href="/Evaluation_metrics/" class="pagination--pager" title="Evaluation Metrics for Binary Classification in Machine Learning: When Accuracy Score Is Not Enough
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/copilot_topic/" rel="permalink">GitHub Copilot seem hesitant? Could be AI safety and fairness measures!
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  4 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">artificial intelligence, large language models, safety and security
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Evaluation_metrics/" rel="permalink">Evaluation Metrics for Binary Classification in Machine Learning: When Accuracy Score Is Not Enough
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  4 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">machine learning, binary classification
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Vancouver_transit_summary/" rel="permalink">Public Transportation in Vancouver: Suggestions from Machine Learning Models
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">GIS, Python, transit
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Vancouver_transit4/" rel="permalink">Demographic Characteristics and Access to Public Transit in Greater Vancouver: Analyses and Recommendations
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  19 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">GIS, Python, transit
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2024 Mark Wang's projects. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+<script src="/assets/js/main.min.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js"
+  integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,1758 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.5">Jekyll</generator><link href="https://zibowangkangyu.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://zibowangkangyu.github.io/" rel="alternate" type="text/html" /><updated>2024-05-20T16:15:28+00:00</updated><id>https://zibowangkangyu.github.io/feed.xml</id><title type="html">Mark Wang</title><subtitle>Data science student at UBC with work experience in finance, sales prediction, NLP, econometrics and management consulting.</subtitle><author><name>Mark Wang</name><email>kangyumarkwang@gmail.com</email></author><entry><title type="html">GitHub Copilot seem hesitant? Could be AI safety and fairness measures!</title><link href="https://zibowangkangyu.github.io/copilot_topic/" rel="alternate" type="text/html" title="GitHub Copilot seem hesitant? Could be AI safety and fairness measures!" /><published>2024-05-16T00:00:00+00:00</published><updated>2024-05-16T00:00:00+00:00</updated><id>https://zibowangkangyu.github.io/copilot_topic</id><content type="html" xml:base="https://zibowangkangyu.github.io/copilot_topic/"><![CDATA[<p>Generative Artificial Intelligence (genAI) has become an indispensable part of software and analytics development. As an R developer working with data analytics, visualization and computation optimization, 
+I use tools like GitHub Copilot every day to improve my productivity and automate routine tasks. Recently, I have witnessed cases where Copilot seems to stop working, and after investigation, the reason, I believe, is 
+the underlying genAI’s safety measures that restrict certain kinds of outputs.</p>
+
+<p>It requires the utmost care to use the most power tools responsibly, and developers and analysts who use genAI tools should be aware of such safety measures and understand its implications. More importantly, on the top of safety measures included in the genAI, we should stay vigilant and take time to reflect: will my use of genAI create danger, harm or bias?</p>
+
+<h2 id="why-has-my-copilot-stopped-working">Why has my Copilot stopped working?</h2>
+
+<p>As an example, I create a few helper functions to analyze demographic data of some Canadian cities in R. GitHub Copilot is extremely powerful for such tasks:</p>
+
+<pre><code class="language-{R}">library(tibble)
+
+demo_data &lt;- tibble(
+
+  city = c("Toronto", "Montreal", "Vancouver", "Calgary", "Ottawa"),
+
+  population = c(2731571, 1704694, 631486, 1237656, 934243),
+
+  median_age = c(37.1, 39.3, 40.8, 36.6, 39.4),
+
+  median_income = c(34500, 32000, 30000, 35000, 33000),
+
+  immigrant_percent = c(46.1, 31.4, 40.8, 30.2, 23.6),
+
+  university_percent = c(30.3, 25.4, 35.6, 28.7, 27.8),
+
+  transgender_percent = c(0.5, 0.3, 0.4, 0.2, 0.1),
+
+  data_scientist_percent = c(0.1, 0.2, 0.3, 0.4, 0.5)
+
+)
+</code></pre>
+
+<p>I want to create functions that extract one aspect of information, for example, percentage of university-educated individuals, for selected cities. For example, I want to create a <code class="language-plaintext highlighter-rouge">get_population</code> function that does the following:</p>
+
+<pre><code class="language-{R}">
+get_population("Toronto")
+
+# A tibble: 1 × 2
+  city    population
+  &lt;chr&gt;        &lt;dbl&gt;
+1 Toronto    2731571
+
+</code></pre>
+
+<p>With very limited prompt, CoPilot is doing a great job creating functions for population, age and income:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4Y2ti_G-73E" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<p>The three functions created are all correct:</p>
+
+<p><code class="language-plaintext highlighter-rouge">get_population</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">get_median_age</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">get_median_income</code></p>
+
+<p>Copilot is really smart, right? In my experience, this is the least Copilot can do for you in programming.</p>
+
+<p>Now we move on to the percentage of immigrants. As you can see below, Copilot suddenly seems reluctant to suggest anything:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8xW1G19aX_o" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<p>Specifically, Copilot is “stuck” at three places. One is after “should return the percentage of”, following which should be the word “immigrants”. Instead, I had to type it out myself. Two is after the first part of the function name “get_”, following which should be “immigrant_percent”. Again, I had to type it out myself. Three is after the <code class="language-plaintext highlighter-rouge">select</code> function, which should be <code class="language-plaintext highlighter-rouge">(city, immigrant_percent)</code>.</p>
+
+<p><strong>What is going on here?</strong> Has Copilot suddenly become less smart? Let us continue with creating the rest of functions.</p>
+
+<p><strong>Woohoo!</strong> Copilot is smart again! As you can see, Copilot had no problem creating the fifth function, <code class="language-plaintext highlighter-rouge">get_university_percent</code>, correctly.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xpWXbAeKSYw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<p>What about the percentage of transgender individuals? <strong>Again, Copilot seems stuck</strong>. GitHub seems reluctant to proceed at three places:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/t4-MH_2Mbk0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<ul>
+  <li>
+    <p>At function description, after “should return the percentage of”. We need the phrase “transgender individuals”.</p>
+  </li>
+  <li>
+    <p>Name of the function, which should be “get_transgender_percent”</p>
+  </li>
+  <li>
+    <p>In the <code class="language-plaintext highlighter-rouge">select</code> function, which should be <code class="language-plaintext highlighter-rouge">(city, transgender_percent)</code></p>
+  </li>
+</ul>
+
+<p>We are beginning to see that <strong>keywords</strong> (“immigrant” and “transgender”) are playing an important role here. An alternative hypothesis is that while population, age, income and education are commonly analyzed demographic characteristics, immigration status and gender identity are less commonly studied. If this is indeed the case, Copilot should also have difficulty creating a function analyzing the percentage of data scientists. Whether somebody works in data science is not a question asked in Canadian censuses, but immigration status is.</p>
+
+<p>It turns out this is not the case. Copilot had zero problem creating <code class="language-plaintext highlighter-rouge">get_data_scientist_percent</code>.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3RMUFhcG998" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<h2 id="safety-and-fairness-in-genai-models-how-does-it-impact-my-development-work">Safety and fairness in genAI models: how does it impact my development work?</h2>
+
+<p>GitHub Copilot’s model provider, OpenAI, has made <a href="https://openai.com/index/moving-ai-governance-forward/">statements</a> about improving the safety, security and trustworthiness of AI. Although I cannot be 100% sure what is behind Copilot’s hesitation, it definitely makes sense to have safety measures on certain topics to avoid societal harm. This is especially important when heated words on the internet are dividing our societies or even inciting violence.</p>
+
+<p>In the example above, the behaviour of Copilot is easily identifiable and understandable. However, as more tasks, and especially higher-level tasks are delegated to genAI in software development, safety and fairness measures also work in less obvious ways. This requires developers, as AI users, to have a strong understanding of how AI safety measures work. As we use Copilot to write codes, don’t forget to ask the following questions:</p>
+
+<ul>
+  <li>
+    <p>Does part of my development / analytical project have risks in terms of safety, security, societal harm and fairness?</p>
+  </li>
+  <li>
+    <p>Does Copilot seem to behave oddly at part of my project? Could AI safety measures be at play?</p>
+  </li>
+  <li>
+    <p>Does Copilot seem to ignore part of your data? Does such data have privacy, safety, ethics or fairness concerns?</p>
+  </li>
+</ul>
+
+<h2 id="beyond-safety">Beyond safety</h2>
+
+<p>Safety, security and fairness in AI systems are important and complex topics, which, we as users of genAI, should nonetheless keep in mind. In the example above, Copilot’s hesitation mitigates risks due to genAI having a harmful output, but it also creates risks due to <strong>genAI not having a good output</strong>.</p>
+
+<ul>
+  <li>
+    <p>Will valuable information about disadvantaged groups of people, for example immigrants or transgender individuals, be kept unattended due to AI safety measures?</p>
+  </li>
+  <li>
+    <p>Will projects dedicated to disadvantaged groups of people receive less support from AI due because they are deemed sensitive or risky?</p>
+  </li>
+</ul>
+
+<p>As genAI rapidly becomes more powerful and widely used, these questions will also demand answers.</p>]]></content><author><name>Mark Wang</name><email>kangyumarkwang@gmail.com</email></author><category term="artificial intelligence" /><category term="large language models" /><category term="safety and security" /><summary type="html"><![CDATA[artificial intelligence, large language models, safety and security]]></summary></entry><entry><title type="html">Evaluation Metrics for Binary Classification in Machine Learning: When Accuracy Score Is Not Enough</title><link href="https://zibowangkangyu.github.io/Evaluation_metrics/" rel="alternate" type="text/html" title="Evaluation Metrics for Binary Classification in Machine Learning: When Accuracy Score Is Not Enough" /><published>2021-03-02T00:00:00+00:00</published><updated>2021-03-02T00:00:00+00:00</updated><id>https://zibowangkangyu.github.io/Evaluation_metrics</id><content type="html" xml:base="https://zibowangkangyu.github.io/Evaluation_metrics/"><![CDATA[<p>At work and in our everyday life, we often make decisions that have two potential outcomes (true or false, acceptance or rejection, etc.). A type of machine learning algorithms, namely binary classification, can automate this process. However, we need to always bear in mind what our ultimate goals are and make sure that algorithms are set up to achieve these goals.</p>
+
+<h2 id="evaluation-metrics-accuracy-score-and-its-shortcomings">Evaluation metrics, accuracy score and its shortcomings</h2>
+
+<p>Roughly speaking, evaluation metrics are used to judge how well a machine learning model achieves a pre-specified goal. Consider a scenario where a bank tries to predict whether a person defaults on credit card loans using demographic and professional data. You are provided with two algorithms A and B, and check their predictions against the actual outcomes, You get the following tables:</p>
+
+<ul>
+  <li>Algorithm 1</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right"> </th>
+      <th>Predicted: default</th>
+      <th>Predicted: non-default</th>
+      <th>Sum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">Actual: default</td>
+      <td>5</td>
+      <td>5</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">Actual: non-default</td>
+      <td>10</td>
+      <td>80</td>
+      <td>90</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">Sum</td>
+      <td>15</td>
+      <td>85</td>
+      <td>100</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Among the 10 actual default cases, Algorithm 1 predicted that 5 of them would default and 5 of them would not. Among then 90 actual non-default cases, the algorithm predicted that 10 of them would default and 80 of them would not.</p>
+
+<ul>
+  <li>Algorithm 2</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right"> </th>
+      <th>Predicted: default</th>
+      <th>Predicted: non-default</th>
+      <th>Sum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">Actual: default</td>
+      <td>1</td>
+      <td>9</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">Actual: non-default</td>
+      <td>2</td>
+      <td>88</td>
+      <td>90</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">Sum</td>
+      <td>3</td>
+      <td>97</td>
+      <td>100</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Among the 10 actualy default cases, Algorithm 2 predicted that 1 of them would default and 9 of them would not. Among then 90 actual non-default cases, the algorithm predicted that 2 of them would default and 88 of them would not.</p>
+
+<p>Which algorithm is better? It depends on the evaluation metric. A common one for binary classification is accuracy score, which is defined as the following:</p>
+
+\[accuracy\ score = \frac{total\ number\ of\ correct\ predictions}{total\ number\ of\ predictions}\]
+
+<p>When a actual default case is predicted as default, or an actual non-default case is predicted as non-defult, a prediction is correct. Otherwise, a prediction is incorrect.</p>
+
+<p>The accuracy score for Algorithm 1 is calculated below:</p>
+
+\[accuracy\ score\  1= \frac{5 + 80}{100} = 0.85\]
+
+<p>The accuracy score for Algorithm 2 is calculated below:</p>
+
+\[accuracy\ score\  1= \frac{1 + 88}{100} = 0.89\]
+
+<p>Does this mean that Algorithm 2 is better than Algorithm 1? A financial analyst would disagree. In fact, Algorithm 2 is of little value at all since it only successfully distinguishes one default case from non-default cases. By contrast, Algorithm 1 is able to successfully identify 5 out of 10 actual default cases. <strong>For a bank, it is more important to identify those who will default that to identify those who will not defaul</strong>, because most people do not default and those who do can cause big damage to a bank’s profitability. Therefore, accuracy score is not an appropriate evaluation metric here.</p>
+
+<h2 id="alternatives-to-accuracy-score-precision-and-recall">Alternatives to accuracy score: precision and recall</h2>
+
+<p>There are many other alternative evaluation metrics to accuracy score. Precision and recall are most widely used.</p>
+
+<h3 id="positive-and-negative-classes">Positive and negative classes</h3>
+
+<p>Before using these two metrics, we need to dig back into the real-world question and decide which of the two potential outcomes (default and non-default) we care more about. In the above example, from a profit-making point of view, the bank would care more about default clients than non-default ones. As a result, in machine learning jargons, we call the default class positive, and the non-default class negative.</p>
+
+<h3 id="precision">Precision</h3>
+
+<p>Precision measures among all instances that are predicted as positive, how many of them are actually positive. For Algorithm 1, the precision is:</p>
+
+\[precision\ 1= \frac{5}{15} = 0.33\]
+
+<p>For Algorithm 2, it is:</p>
+
+\[precision\ 2= \frac{1}{3} = 0.33\]
+
+<h3 id="recall">Recall</h3>
+
+<p>Recall measures among all instances that are acutally positive, how many of them are successfully identified as positive. For Algorithm 1, the recall is:</p>
+
+\[recall\ 1= \frac{5}{10} = 0.5\]
+
+<p>For Algorithm 2, it is:</p>
+
+\[precision\ 2= \frac{1}{9} = 0.1\]
+
+<p>Although Algorithms 1 and 2 have the same precision, the recall of Algorithm 1 is much higher. Therefore, we think Algorithm 1 is better than Algorithm 2.</p>
+
+<h2 id="back-to-the-real-world-modeling-outcome-and-broader-applications">Back to the real world: modeling outcome and broader applications</h2>
+
+<p>Does our choice make sense? Let us test it against a real world scenario.</p>
+
+<ul>
+  <li>Financial returns for bank</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right"> </th>
+      <th>Predicted: default</th>
+      <th>Predicted: non-default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">Actual: default</td>
+      <td>0</td>
+      <td>-50</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">Actual: non-default</td>
+      <td>0</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>As shown in the table above, if a bank predicts that a customer would default, it will choose not to extent loan, and thus the financial return is zero regardless whether the customer defaults or not. If the bank issues a loan and the customer does not default, the bank will earn 5 dollars’ profit in average. However, if a customer is issued a loan and defaults, the bank will suffer from 50 dollars’ loss.</p>
+
+<p>The net profit for the bank, using Algorithm 1, is:</p>
+
+\[0 \times 5 + 0 \times 10 + (-50) \times 5 + 5 \times 80 = 150\]
+
+<p>Using Algorithm 2, the bank’s net profit is:</p>
+
+\[0 \times 1 + 0 \times 2 + (-100) \times 9 + 5 \times 88 = -460\]
+
+<p>Algorithm 1 indeed gives the bank a better financial outcome! The use of evaluation metrics other than accuracy score is applied to many real-world questions. For example, if we want to detect a rare disease from blood samples of the general population, we should set the “have disease” outcome as the positive class, and select an algorithm that detects enough real patients, even if a reasonable amount of non-patients are erroreously also categorized as having the disease. We can always do follow-up the checks to make sure that we do not give treatment to people who do not have the disease.</p>]]></content><author><name>Mark Wang</name><email>kangyumarkwang@gmail.com</email></author><category term="machine learning" /><category term="binary classification" /><summary type="html"><![CDATA[machine learning, binary classification]]></summary></entry><entry><title type="html">Combating America’s Other Infodemic</title><link href="https://zibowangkangyu.github.io/Infodemic/" rel="alternate" type="text/html" title="Combating America’s Other Infodemic" /><published>2021-03-01T00:00:00+00:00</published><updated>2021-03-01T00:00:00+00:00</updated><id>https://zibowangkangyu.github.io/Infodemic</id><content type="html" xml:base="https://zibowangkangyu.github.io/Infodemic/"><![CDATA[<p>This projects won the First Place Prize at 2021 West Coast Regional Datathon sponsored by Citadel and CItadel Securities and Correlation One. The GitHub repository of this project can be found <a href="https://github.com/Twenty-One-Spring-Citadel-WestCoast/Datathon">here</a>. I am honored to have worked with three fantastic team members <a href="https://www.linkedin.com/in/ben-huckell/">Ben</a>, <a href="https://www.linkedin.com/in/jskzhou/">Jason</a> and <a href="https://www.linkedin.com/in/zhipeng-peter-ye/">Peter</a>.</p>
+
+<p>The submitted version of the report can be downloaded <a href="https://github.com/Twenty-One-Spring-Citadel-WestCoast/Datathon/raw/main/team_2_report.pdf">here</a>.</p>
+
+<h2 id="summary-misconception-misinformation-and-covid-19-pandemic-control">Summary: misconception, misinformation and COVID-19 pandemic control</h2>
+
+<p>Since the beginning of the pandemic, governments and technology companies around the world have prioritized combating false information about the COVID-19, along with public health measures, to ensure that people take adequate caustion and change their behavior to slow down the spread of the virus. In this project, we demontrated strong statistical relationships between people’s increased physical mobility and worse outcomes of COVID, as measured by infection, hospitalization and death at the state level. Moreover, we discovered that the incorrect information problem to COVID-19 containment turns our to be broader than misinformation from social or traditional media and extends to a lack of basic knowledge about the cause, spread and prevention of COVID-19 (misconception). Misconception is associated with higher non-essential mobility and worse disease outcomes.</p>
+
+<p>Based on our models, we identified US states where, by geographic and demographic characters, where people are most vulnerable to the COVID-19 misconception or misinformation. We believe that the dissemination of correct information to people who are not necessarily exposed to much misinformation from the media, but nonetheless have more misconceptions about the basics of COVID-19.</p>
+
+<h2 id="data-source-preprocessing-and-eda">Data source, preprocessing and EDA</h2>
+
+<p>We confine the time span of this study from March 2020 to January 2021.</p>
+
+<h3 id="physical-mobility">Physical mobility</h3>
+
+<p>We use people’s physical movement at non-residential venues as a measurement of compliance to pandemic containment policies in the population. Google has made public datasets on movement of people available since February 15, 2020 to help combat COVID-19. As shown in the map below, states in Southern US, along with New York and small states in the northeast saw the most dramatic drop in non-residential mobility, By contrast, states in the northwest saw little change, or even increase in non-residential mobility.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Infodemic/plots/Mobility_change.png" alt="Map: Mobility change" /></p>
+
+<p>It turns out that in addition to differences in strictness of government policies and levels of compliance, Google Mobility data should also be used along with temperature and urbanization rate to get a more accurate picture. The baseline data was taken in January/February 2020, and residents of northern and colder states are naturally more stagnant during the winter months, and are thus more likely to be more mobile in the summer period. In addition, rural and urban residents also show different movement patterns. Therefore, as part of regression analyses, we have included a state’s average temperature and urbanization rate whenever the physical movement data is used.</p>
+
+<h3 id="misconception-and-exposure-to-misinformation">Misconception and exposure to misinformation</h3>
+
+<p>Using survey data from <a href="https://covidstates.org/">CovidStates</a>, we constructed indicators, we constructed the following two indicators:</p>
+
+<ul>
+  <li>Misconceptions about COVID-19. It is measured as the average proportion of false statements about the prevention and treatment of COVID-19 identified as correct by respondents. It appears that the southern states show much higher rates of misconceptions than the rest of the country.</li>
+</ul>
+
+<p><img src="https://zibowangkangyu.github.io/images/Infodemic/plots/Misconception_map.png" alt="Map: Misconceptions" /></p>
+
+<ul>
+  <li>Exposure to misinformation from social and traditional media. We took the average prevalence of false information by media source, weighted by the amount of usage of each media source for COVID-19 related information. Overall, we can see quite clearly that there are general trends between misinformation and misconceptions. Both southern states, and states with major metropolitan centers including California and New York, are more exposed to COVID-19 misinformation.</li>
+</ul>
+
+<p><img src="https://zibowangkangyu.github.io/images/Infodemic/plots/Misinformation_map.png" alt="Map: Misinformation" /></p>
+
+<p>As shown in the bar-chart below, social media platforms, especially Instagram and YouTube, have higher high proportion of COVID-related information that is false. More urbanized areas such as Washington DC, California and New York
+have significantly higher proportion of residents who get information about COVID-19 from such sources, and are thus exposed to misinformation. By contrast, more rural states, like Wyoming and Vermont, are less exposed to Instagram and YouTube (levels of Facebook and traditional news usage are similar), and are thus less exposed to misinformation from the media.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Infodemic/plots/Misinformation_chart.png" alt="Chart: Misinformation" />
+<img src="https://zibowangkangyu.github.io/images/Infodemic/plots/Misinformation_chart_2.png" alt="Chart: Misinformation 2" /></p>
+
+<h3 id="covid-epidemiologies">COVID epidemiologies</h3>
+
+<p><a href="https://covidtracking.com/">The Covid Tracking Project</a>, which has fortunately ended in March 2021, provides fantastic daily COVID pidemiological data at the U.S. state level. Key statistics that we used include:</p>
+
+<ul>
+  <li>
+    <p>New Deaths for each day</p>
+  </li>
+  <li>
+    <p>New Hospitalizations for each day</p>
+  </li>
+  <li>
+    <p>Current number of patients in ICU for each day</p>
+  </li>
+  <li>
+    <p>Current number of patients on ventilator</p>
+  </li>
+  <li>
+    <p>Test positivity rate for each day</p>
+  </li>
+</ul>
+
+<h3 id="government-pandemic-control-measures">Government pandemic control measures</h3>
+
+<p>we collected data about government restrictions to control the spread of COVID-19 at the state level, from the <a href="https://www.bsg.ox.ac.uk/research/research-projects/covid-19-government-response-tracker">Covid-19 Policy Responses project</a> run by Blavatnik School of Government, Oxford University. The dataset tracks closure of venues, cancellation of events, restrictions on gathering, stay-at-home orders, and
+restrictions on domestic and international movement.</p>
+
+<h3 id="demographics">Demographics</h3>
+
+<p>We compiled demographic data at the state level, covering characterstics including education, temperature, urbanization, age, race and economics, from a variety of sources. We want to find out what demographic features are associated to misconceptions about COVID-19 and exposure to COVID-19 misinformation.</p>
+
+<h2 id="modelling">Modelling</h2>
+
+<p>We are aware that there are many factors contributing to the COVID outcomes and simply linking the misinformation to the COVID through regression at high level may involve too much Omitted Variable Bias (OVB) and undermine causal relationship we want to investigate. Therefore, we would like to stay focused on proving one logical chain that we believe to be both important and interesting with statistical measures. In order to do so, we separated the whole process into steps: first we analyze COVID-Mobility relationship and then we investigate Mobility-Misinformation relationship. To be rigorous, we also investigated COVID-Misinformation relationship and included in the  mobility-Misinformation section.</p>
+
+<h3 id="impact-of-moblity-on-covid-spread">Impact of moblity on COVID spread</h3>
+
+<p>We applied panel regression to analyzing the relationship between mobility and the spread of COVID at the state level. To avoid the inverse causal relationship between mobility and COVID, we used 90 days leading techniques on dependent variables (COVID metrics). We are also aware of the multi-collinearity problem in our mobility features, and we therefore applied Principle Component Analysis (PCA) to summarize all the mobility features (capturing 87%
+vairance), and run the regression again, in addition to regressions on individual mobility features.</p>
+
+<p>The models again shows statistical significance in the coefficient and proved the relationship between Mobility Index and the COVID statistics. More physical activities in non-essential lead to more infections of COVID-19.</p>
+
+<h3 id="misconceptions-misinformation-and-disease-outcomes">Misconceptions, misinformation and disease outcomes</h3>
+
+<p>Due to a lack of panel data on misconceptions, misinformation and disease outcomes, We used cross-sectional regression to explore the relationship between misconceptions, misinformation and disease outcomes. As shown in the following table, the positive relationship between COVID-19 misconceptions and severity of disease outcomes hold. Also interesting is the fact that although misconceptions are related to worse disease outcomes, exposure to misinformation from media sources does not have a significant impact on disease outcomes.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Infodemic/plots/Misinformation_regression.png" alt="Chart: Misinformation regression" /></p>
+
+<p>Through what mechanism does misconceptions and exposure to misinformation impact COVID-19 disease outcomes? We have found evidence to suggest that people who have more misconceptions about COVID-19 are less mindful about reducing physical movement. As shown in the following table, without controlling for level of strictness at each state, misconceptions are associated with more movement in non-residential areas. After controlling for strictness of government measures, the positive relationship between COVID-19 misconceptions and non-residential mobility remains, but the magnificence of impact decreases.</p>
+
+<p>Also worth noting is the fact that higher exposure to media misinformation is shown to be associated with less mobility in non-residential areas. A possible explanation is that although certain media sources, especially social media platforms do contain large amount of misinformation, such information does not necessarily make people less likely to physically distance, or be careful in protecting themselves from COVID-19.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Infodemic/plots/Misinformation_regression_2.png" alt="Chart: Misinformation regression 2" /></p>
+
+<h3 id="identify-vulnerable-demographics">Identify vulnerable demographics</h3>
+
+<h4 id="misconceptions-about-covid-and-exposure-to-misinformation">Misconceptions about COVID and exposure to misinformation</h4>
+
+<p>we found that both median age and urbanization percentage both showed statistically significant (below p=0.05) negative coefficients, while percentage of population with less than a high school diploma showed a statistically significant positive coefficient. This means that old, rural regions, with significant high school dropout rates are significantly more at risk for misconceptions than the rest of the country.</p>
+
+<p>Conversely, for misinformation, we found a rather interesting different result. We found that percentage of population with less than a high school diploma, as well as percentage of population with greater than a bachelors degree, showed statistically significant positive coefficients, whereas those with only a high school diploma showed no strong directional coefficient. This means that misinformation is disproportionately affecting the lowest education levels, as well as the highest, but not those in the middle. We found this quite surprising.</p>
+
+<p>Overall, this supports our original hypothesis that misinformation and misconceptions are two different issues plaguing the United States. The visualization below shows the change in coefficients from each regression, and the results of both of these models are provided in the appendix.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Infodemic/plots/Coefficients.png" alt="Chart: Coefficients on misconceptions and misinformation" /></p>
+
+<h4 id="mobility">Mobility</h4>
+
+<p>Similarly, here we are tring to potentially identify any links between demographic characterstics and extent of mobility drop during the pandemic. In this instance, we see that the most at risk group when it comes to mobility are those that are young, living in non-urban areas, with moderate education levels. Coefficients and p-values are included below:</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Infodemic/plots/Coefficients_1.png" alt="Chart: Mobility regression" /></p>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>This analysis highlights that between exposure to misinformation and possession of misconceptions about COVID-19, the latter is observably more strongly linked to potential lack of compliance to public health measures and therefore more severe pandemic effects. We have also identified demographics that are older, more rural, less educated (no high school diploma) and more economically disadvantaged are more likely to possess misconceptions about COVID-19, and in turn demonstrate more mobility in non-essential areas, less compliance to public health measures, and suffer more severe effects from the pandemic.</p>
+
+<p>We suggest that federal and state governments and other agencies could effectively use their resources to craft more impactful measures and regulations, such as focusing on education for demographics vulnerable to misconception, while simultaneously combating digital misinformation in areas that sees more prevalence and spread. This targeted, two-pronged approach could address those most vulnerable to the pandemic, as well as prevent the formation of more misconception-vulnerable groups, ultimately alleviating the effects of not just COVID-19, but also future pandemics.</p>]]></content><author><name>Mark Wang</name><email>kangyumarkwang@gmail.com</email></author><category term="python" /><category term="regressions" /><category term="COVID-19" /><summary type="html"><![CDATA[python, regressions, COVID-19]]></summary></entry><entry><title type="html">Public Transportation in Vancouver: Suggestions from Machine Learning Models</title><link href="https://zibowangkangyu.github.io/Vancouver_transit_summary/" rel="alternate" type="text/html" title="Public Transportation in Vancouver: Suggestions from Machine Learning Models" /><published>2021-02-14T00:00:00+00:00</published><updated>2021-02-14T00:00:00+00:00</updated><id>https://zibowangkangyu.github.io/Vancouver_transit_summary</id><content type="html" xml:base="https://zibowangkangyu.github.io/Vancouver_transit_summary/"><![CDATA[<p>The City of Vancouver <a href="https://vancouver.ca/files/cov/transportation-2040-plan.pdf">aspires to</a> have 33% of its residents using public transportation to commute by 2040 by advancing “new and improved” local and rapid transit. How can the public transit authority in the Greater Vancouver Area (GVA) best allocate its resources across the region to increase the number of residents using public transit?</p>
+
+<p>I gathered data from Canada’s 2016 census and <a href="https://developer.translink.ca/servicesgtfs/gtfsdata">TransLink</a> to analyze people’s access to, and usage of public transit. Using Random Forest and LASSO regression, I modeled the relationship between proportion of residents using public transit to commute and number of accessible public transit services, taking into account a wide range of socio-demographic factors. Then, I identified areas where a fixed amount of increase in transit access leads to the most increase in proportion of people using transit. These are the areas that GVA’s new public transportation development should focus on.</p>
+
+<p>Pouring resources into priority neighborhoods identified in the model instead of randomly selected areas, GVA can potentially see a significant increase in the number of people using public transit. For example, if we target regions with a combined population of 100,000 selected by our model, and increase the number of transit services per capita to these regions by 10%, we are expected to see 0.5 percentage point increase in proportion of residents using transit, which translates into 500 people. By contrast, if we randomly select regions also with a combined population of 100,000, we only expect to see 80 more people using transit.</p>
+
+<p>The following chart shows predicted number of new users of transit, as a function of population in the neighborhoods where GVA increases the number of public transit services by 10%. Our model can identify areas where investment in new public transportation services is most effective in increasing transit use.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit_summary/plots/X_2_benefited_population_compare_for_post.png" alt="Chart: Scenario 2 Benefited Population Compare" /></p>
+
+<p>The following map highlights priority areas if GVA wants to target 10% of its neighborhoods, and increase the number of public transit services available to these areas by 10%.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit_summary/plots/X_2_LASSO.png" alt="Map: LASSO Scenario 2" /></p>
+
+<p>For an interactive web application with simulation results of priority neighborhoods, see <a href="https://gva-transit-ml.herokuapp.com/">here</a>.</p>
+
+<p>A series of in-depth posts about this project include:</p>
+
+<ul>
+  <li><a href="https://zibowangkangyu.github.io/Vancouver_transit1/">data sources</a></li>
+  <li><a href="https://zibowangkangyu.github.io/Vancouver_transit2/">key variables</a></li>
+  <li><a href="https://zibowangkangyu.github.io/Vancouver_transit3/">machine learning modeling</a>, and</li>
+  <li><a href="https://zibowangkangyu.github.io/Vancouver_transit4/">model analyses and recommendations</a>.</li>
+</ul>
+
+<p>For the Jupyter Notebook with full analysIs, please see <a href="https://nbviewer.jupyter.org/github/ZIBOWANGKANGYU/Vancouver_transit/blob/master/Report.ipynb">here</a>. The GitHub repo of this analysis is located <a href="https://github.com/ZIBOWANGKANGYU/Vancouver_transit">here</a>.</p>]]></content><author><name>Mark Wang</name><email>kangyumarkwang@gmail.com</email></author><category term="GIS" /><category term="python" /><category term="transit" /><summary type="html"><![CDATA[GIS, Python, transit]]></summary></entry><entry><title type="html">Demographic Characteristics and Access to Public Transit in Greater Vancouver: Analyses and Recommendations</title><link href="https://zibowangkangyu.github.io/Vancouver_transit4/" rel="alternate" type="text/html" title="Demographic Characteristics and Access to Public Transit in Greater Vancouver: Analyses and Recommendations" /><published>2020-12-18T00:00:00+00:00</published><updated>2020-12-18T00:00:00+00:00</updated><id>https://zibowangkangyu.github.io/Vancouver_transit4</id><content type="html" xml:base="https://zibowangkangyu.github.io/Vancouver_transit4/"><![CDATA[<p>A shorter high-level summary of the project can be found <a href="https://zibowangkangyu.github.io/Vancouver_transit_summary/">here</a>. For an interactive web application with simulation results of priority neighborhoods, see <a href="https://gva-transit-ml.herokuapp.com/">here</a>.</p>
+
+<p>This is part 4 of a series of in-depth posts about this project including</p>
+
+<ul>
+  <li><a href="https://zibowangkangyu.github.io/Vancouver_transit1/">data sources</a></li>
+  <li><a href="https://zibowangkangyu.github.io/Vancouver_transit2/">key variables</a></li>
+  <li><a href="https://zibowangkangyu.github.io/Vancouver_transit3/">machine learning modeling</a>, and</li>
+  <li><a href="https://zibowangkangyu.github.io/Vancouver_transit4/">model analyses and recommendations</a>.</li>
+</ul>
+
+<p>For the Jupyter Notebook with full analysIs, please see <a href="https://nbviewer.jupyter.org/github/ZIBOWANGKANGYU/Vancouver_transit/blob/master/Report.ipynb">here</a>. The GitHub repo of this analysis is located <a href="https://github.com/ZIBOWANGKANGYU/Vancouver_transit">here</a>.</p>
+
+<h2 id="where-should-transit-infrastructure-development-take-place-in-the-greater-vancouver-area">Where should transit infrastructure development take place in the Greater Vancouver Area?</h2>
+
+<p>In order to understand where Greater Vancouver Area’s public transit agency should invest in infrastructure development, I try to identify places in the region where the same increase in access to transit service will lead to the most increase in transit use. Using the 2016 Canadian census data and the GTFS dataset, I am able to build two machine learning models: LASSO regression and Random Forest. After training our models with the real dataset, I tweaked the input data a little bit to simulate scenarios where access to public transit is marginally increased across the Greater Vancouver Area. It turns out the following areas will benefit the most, as measured by public transportation use:</p>
+
+<ul>
+  <li>
+    <p>The downtown core: Yaletown and areas around the Waterfront</p>
+  </li>
+  <li>
+    <p>North Vancouver and West Vancouver: neighborhoods close to the Trans-Canadian Highway</p>
+  </li>
+  <li>
+    <p>Richmond: areas on the north and south edges</p>
+  </li>
+  <li>
+    <p>Burnaby: areas further off from the Trans-Canadian Highway</p>
+  </li>
+  <li>
+    <p>Surrey: areas in the southwest and northeast</p>
+  </li>
+</ul>
+
+<h2 id="model-diagnostics">Model Diagnostics</h2>
+
+<p>Before drawing conclusions from our models, we want to examine whether there is spatial auto-correlation of their prediction errors. We believe that the higher the spatial auto-correlations are, the more unexplained factors, which affect transit use and are spatially clustered, there will be. Therefore, we want to see less, and ideally no spatial auto-correlation.</p>
+
+<p>As shown in the maps below, the spatial-autocorrelation problem does not seem to be severe. Indeed, the Moran’s I is 0.05 for the LASSO model, and 0.18 for the random forest model. However, p-tests show that we do have spatial-autocorrelation problems, at confidence levels of 0.001.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit4/plots/LASSO_error.png" alt="Map: residuals of LASSO" /></p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit4/plots/rf_error.png" alt="Map: residuals of rf" /></p>
+
+<h2 id="model-analyses-feature-importance">Model analyses: feature importance</h2>
+
+<p>Both LASSO and Random Forest models give easy access to measurements of global feature importance. For the LASSO model, I use the magnificence of coefficients to roughly estimate each variable’s importance. For the Random Forest model, I use the impurity measurement of each variable’s importance, and calculate SHAP (SHapley Additive exPlanations) values.</p>
+
+<p>In addition, the three types of input variables, namely <code class="language-plaintext highlighter-rouge">categorical_features</code>, <code class="language-plaintext highlighter-rouge">numeric_features</code>, and <code class="language-plaintext highlighter-rouge">proportion_features</code> are scaled differently in the preprocessing step. Therefore, I will review the important variables for all three categories separately.</p>
+
+<h3 id="categorical-features">Categorical features</h3>
+
+<h4 id="lasso-model">LASSO model</h4>
+
+<p>The table below shows the five categorical features that mostly strongly predict high proportion of transit use among residents. They are ADA or CCS areas.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right"> </th>
+      <th style="text-align: right">feature</th>
+      <th style="text-align: right">coeffs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">148</td>
+      <td style="text-align: right">ADAUID_59150117</td>
+      <td style="text-align: right">0.097663</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">7</td>
+      <td style="text-align: right">CCSUID_5915022</td>
+      <td style="text-align: right">0.069961</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">8</td>
+      <td style="text-align: right">CCSUID_5915025</td>
+      <td style="text-align: right">0.065468</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">138</td>
+      <td style="text-align: right">ADAUID_59150107</td>
+      <td style="text-align: right">0.053888</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">114</td>
+      <td style="text-align: right">ADAUID_59150082</td>
+      <td style="text-align: right">0.048754</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit4/plots/LASSO_top_categorical.png" alt="Map: high transit use categorical LASSO" /></p>
+
+<p>As shown in the map above, areas in the city of Vancouver tend to have high proportions of people using public transit.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit4/plots/LASSO_bottom_categorical.png" alt="Map: low transit use categorical LASSO" /></p>
+
+<p>Somehow unexpectedly, regions that most strongly predict low public transit use are also in the downtown area, distributed along Thurlow Street. They are also in the CCS which predicts high transit use. In other words, these areas may have lower transit use than their immediate neighbors, but not necessarily compared to other ares in GVA.</p>
+
+<h4 id="random-forest-model">Random Forest model</h4>
+
+<p>The table below shows the five categorical features that most strongly impact proportion of transit use among residents. They are CSD or CCS areas. We cannot know the direction of impact from these impurity measures.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right"> </th>
+      <th style="text-align: right">feature</th>
+      <th style="text-align: right">impurity_importance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">18</td>
+      <td style="text-align: right">CSDUID_5915022</td>
+      <td style="text-align: right">0.008434</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">8</td>
+      <td style="text-align: right">CCSUID_5915025</td>
+      <td style="text-align: right">0.005865</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">CCSUID_5915001</td>
+      <td style="text-align: right">0.004445</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">7</td>
+      <td style="text-align: right">CCSUID_5915022</td>
+      <td style="text-align: right">0.003664</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">148</td>
+      <td style="text-align: right">ADAUID_59150117</td>
+      <td style="text-align: right">0.001297</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit4/plots/rf_imp_categorical.png" alt="Map: transit use categorical rf" /></p>
+
+<p>If I can make a guess, however, areas in the city of Vancouver probably tend to have higher rates of transit use. By contrast, The east part of Langley city and Aldergrove probably have low transit use. We will know more details about each feature’s impact later using SHAP.</p>
+
+<h3 id="numeric-features">Numeric features</h3>
+
+<h4 id="lasso-model-1">LASSO model</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right"> </th>
+      <th style="text-align: right">coeffs</th>
+      <th>explanation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">620</td>
+      <td style="text-align: right">0.022032</td>
+      <td>Immigration - Total Sex / Total - Age at immigration for the immigrant population in private households - 25% sample data / 25 to 44 years</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">711</td>
+      <td style="text-align: right">0.021731</td>
+      <td>Labour - Total Sex / Participation rate</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">383</td>
+      <td style="text-align: right">0.018865</td>
+      <td>Households - Both sexes / Total - Persons not in census families in private households - 100% data ; Both sexes</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">682</td>
+      <td style="text-align: right">0.016852</td>
+      <td>Ethnic Origin - Total Sex / Total - Ethnic origin for the population in private households - 25% sample data / European origins / British Isles origins</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">439</td>
+      <td style="text-align: right">0.016713</td>
+      <td>Housing - Total Sex / Total -  Owner and tenant households with household total income greater than zero, in non-farm, non-reserve private dwellings by shelter-cost-to-income ratio - 25% sample data / Spending less than 30% of income on shelter costs</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>As shown in the table above, important numeric factors that indicate high transit use include:</p>
+
+<p>(1) Large number of immigrant population who moved to Canada when they were 25 to 44 years old,</p>
+
+<p>(2) High labor participation rate (number of people working as a percentage of total population),</p>
+
+<p>(3) High number of people who do not live in families,</p>
+
+<p>(4) High number of people of British ethnicity, and</p>
+
+<p>(5) High number of people who spend less money on housing as compared to their income.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right"> </th>
+      <th style="text-align: right">coeffs</th>
+      <th>explanation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">712</td>
+      <td style="text-align: right">-0.016735</td>
+      <td>Labour - Total Sex / Employment rate</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">724</td>
+      <td style="text-align: right">-0.015868</td>
+      <td>Labour - Total Sex / Total labour force aged 15 years and over by class of worker - 25% sample data / All classes of workers / Self-employed</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">790</td>
+      <td style="text-align: right">-0.014384</td>
+      <td>Journey to Work - Males / Total - Commuting destination for the employed labour force aged 15 years and over in private households with a usual place of work - 25% sample data / Commute within census subdivision (CSD) of residence</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">448</td>
+      <td style="text-align: right">-0.013827</td>
+      <td>Housing - Total Sex / Total - Owner households in non-farm, non-reserve private dwellings - 25% sample data / Average value of dwellings ($)</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">453</td>
+      <td style="text-align: right">-0.013343</td>
+      <td>Housing - Total Sex / Total - Tenant households in non-farm, non-reserve private dwellings - 25% sample data / Average monthly shelter costs for rented dwellings ($)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>As shown in the table above, the following numeric features most strongly predict low transit use:</p>
+
+<p>(1) High employment rate (number of people actually employed as a percentage of people who want to be employed),</p>
+
+<p>(2) Large self-employed population,</p>
+
+<p>(3) Large number of people working in the same CSD,</p>
+
+<p>(4) High average value of dwellings, and</p>
+
+<p>(5) High average housing cost for rented dwellings.</p>
+
+<p>We are also interested in knowing where the two transit access variables are ranked among the numeric features. It turns out that among 462 numeric features, number of services per capita ranks 20, coefficient is 0.0060. However, the number of stops per capita has zero coefficient.</p>
+
+<h4 id="random-forest-model-1">Random Forest model</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right"> </th>
+      <th style="text-align: right">impurity_importance</th>
+      <th>explanation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">349</td>
+      <td style="text-align: right">0.036776</td>
+      <td>Population and dwelling counts / Population density per square kilometre</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">800</td>
+      <td style="text-align: right">0.019114</td>
+      <td>NBA_services_PC</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">548</td>
+      <td style="text-align: right">0.006549</td>
+      <td>Income - Total Sex / Total - Income statistics in 2015 for the population aged 15 years and over in private households - 100% data / Number of government transfers recipients aged 15 years and over in private households - 100% data / Median government transfers in 2015 among recipients ($)</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">352</td>
+      <td style="text-align: right">0.004274</td>
+      <td>Dwelling characteristics / Total - Occupied private dwellings by structural type of dwelling - 100% data / Single-detached house</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">415</td>
+      <td style="text-align: right">0.003868</td>
+      <td>Housing - Total Sex / Total - Occupied private dwellings by period of construction - 25% sample data / 1960 or before</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The table above show the important numeric features in our Random Forest model. Population density turns out to be the most important one. Also, much to our pleasant surprise, number of services per capita, the variable that we are interested in, ranks the second.</p>
+
+<p>Other important features include high amounts of government transfer recipients, high number of single-detached house, and very old house dwellings.</p>
+
+<h3 id="proportional-features">Proportional features</h3>
+
+<h4 id="lasso-model-2">LASSO model</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right"> </th>
+      <th style="text-align: right">coeffs</th>
+      <th style="text-align: right">Explanation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">1336</td>
+      <td style="text-align: right">0.047517</td>
+      <td style="text-align: right">Denominator is Labour - Total Sex / Total labour force population aged 15 years and over by occupation - National Occupational Classification (NOC) 2016 - 25% sample data / All occupations; numerator is Labour - Total Sex / Total labour force population aged 15 years and over by occupation - National Occupational Classification (NOC) 2016 - 25% sample data / All occupations / 6 Sales and service occupations.</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">1156</td>
+      <td style="text-align: right">0.046837</td>
+      <td style="text-align: right">Denominator is Labour - Total Sex / Total - Place of work status for the employed labour force aged 15 years and over in private households - 25% sample data; numerator is Labour - Total Sex / Total - Place of work status for the employed labour force aged 15 years and over in private households - 25% sample data / Worked at usual place.</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">1097</td>
+      <td style="text-align: right">0.044393</td>
+      <td style="text-align: right">Denominator is Ethnic Origin - Total Sex / Total - Ethnic origin for the population in private households - 25% sample data; numerator is Ethnic Origin - Total Sex / Total - Ethnic origin for the population in private households - 25% sample data / Asian origins / East and Southeast Asian origins.</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">1182</td>
+      <td style="text-align: right">0.040103</td>
+      <td style="text-align: right">Denominator is Journey to Work - Females / Total - Commuting destination for the employed labour force aged 15 years and over in private households with a usual place of work - 25% sample data; numerator is Journey to Work - Females / Total - Commuting destination for the employed labour force aged 15 years and over in private households with a usual place of work - 25% sample data / Commute to a different census subdivision (CSD) within census division (CD) of residence.</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">821</td>
+      <td style="text-align: right">0.037006</td>
+      <td style="text-align: right">Denominator is Family characteristics / Total - Couple census families in private households - 100% data; numerator is Family characteristics / Total - Couple census families in private households - 100% data / Couples with children.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>As shown in the table above, strong predictors for high transit use, among proportion variables, include:</p>
+
+<p>(1) High proportion of people working in sales and service industries,</p>
+
+<p>(2) High proportion of people working at a constant and usual location,</p>
+
+<p>(3) High proportion of people with East and Southeast Asian ethnic origins,</p>
+
+<p>(4) High proportion of people commuting to a different CSD but the same CD for work, and</p>
+
+<p>(5) High proportion of households that have couples with children.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right"> </th>
+      <th style="text-align: right">coeffs</th>
+      <th style="text-align: right">explanation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">829</td>
+      <td style="text-align: right">-0.046500</td>
+      <td style="text-align: right">Denominator is Housing - Total Sex / Total - Private households by tenure - 25% sample data; numerator is Housing - Total Sex / Total - Private households by tenure - 25% sample data / Owner.</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">1055</td>
+      <td style="text-align: right">-0.026167</td>
+      <td style="text-align: right">Denominator is Immigration - Total Sex / Total - Generation status for the population in private households - 25% sample data; numerator is Immigration - Total Sex / Total - Generation status for the population in private households - 25% sample data / Third generation or more.</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">1289</td>
+      <td style="text-align: right">-0.023855</td>
+      <td style="text-align: right">Denominator is Immigration - Total Sex / Total - Selected places of birth for the immigrant population in private households - 25% sample data / Asia; numerator is Immigration - Total Sex / Total - Selected places of birth for the immigrant population in private households - 25% sample data / Asia / India.</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">878</td>
+      <td style="text-align: right">-0.014456</td>
+      <td style="text-align: right">Denominator is Housing - Total Sex / Total - Tenant households in non-farm, non-reserve private dwellings - 25% sample data; numerator is Housing - Total Sex / Total - Tenant households in non-farm, non-reserve private dwellings - 25% sample data / % of tenant households spending 30% or more of its income on shelter costs.</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">1368</td>
+      <td style="text-align: right">-0.010210</td>
+      <td style="text-align: right">Denominator is Mobility  - Total Sex / Total - Mobility status 5 years ago - 25% sample data / Movers / Migrants; numerator is Mobility  - Total Sex / Total - Mobility status 5 years ago - 25% sample data / Movers / Migrants / Internal migrants.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>By contrast, strong predictors for low transit use, among proportion variables, include:</p>
+
+<p>(1) High proportion of people who live in a dwelling which they own,</p>
+
+<p>(2) High proportion of households where three or more generations live together,</p>
+
+<p>(3) High number of immigrants who are born in India, as a proportion of all immigrants born in Asia,</p>
+
+<p>(4) High proportion of tenant households spending 30% or more of its income on shelter costs, and</p>
+
+<p>(5) High number of internal migrants as a proportion of all migrants.</p>
+
+<h4 id="random-forest-model-2">Random forest model</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right"> </th>
+      <th style="text-align: right">impurity_importance</th>
+      <th>explanation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">813</td>
+      <td style="text-align: right">0.281665</td>
+      <td>Denominator is Marital Status - Both Sexes / Total - Marital status for the population aged 15 years and over - 100% data ; Both sexes; numerator is Marital Status - Both Sexes / Total - Marital status for the population aged 15 years and over - 100% data ; Both sexes / Married or living common law ; Both sexes.</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">814</td>
+      <td style="text-align: right">0.034743</td>
+      <td>Denominator is Marital Status - Both Sexes / Total - Marital status for the population aged 15 years and over - 100% data ; Both sexes; numerator is Marital Status - Both Sexes / Total - Marital status for the population aged 15 years and over - 100% data ; Both sexes / Not married and not living common law ; Both sexes.</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">1097</td>
+      <td style="text-align: right">0.034705</td>
+      <td>Denominator is Ethnic Origin - Total Sex / Total - Ethnic origin for the population in private households - 25% sample data; numerator is Ethnic Origin - Total Sex / Total - Ethnic origin for the population in private households - 25% sample data / Asian origins / East and Southeast Asian origins.</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">958</td>
+      <td style="text-align: right">0.030017</td>
+      <td>Denominator is Other language spoken regularly at home - Both sexes / Total - Other language(s) spoken regularly at home for the total population excluding institutional residents - 100% data ; Both sexes; numerator is Other language spoken regularly at home - Both sexes / Total - Other language(s) spoken regularly at home for the total population excluding institutional residents - 100% data ; Both sexes / Non-official language ; Both sexes.</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">955</td>
+      <td style="text-align: right">0.028454</td>
+      <td>Denominator is Other language spoken regularly at home - Both sexes / Total - Other language(s) spoken regularly at home for the total population excluding institutional residents - 100% data ; Both sexes; numerator is Other language spoken regularly at home - Both sexes / Total - Other language(s) spoken regularly at home for the total population excluding institutional residents - 100% data ; Both sexes / None ; Both sexes.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>In our Random Forest model, marital status of residents have the most impact on use of public transit. Other important proportional features include:</p>
+
+<p>(1) Number of immigrants from East and Southeast Asia as a proportion of all immigrants,</p>
+
+<p>(2) Proportion of residents speaking more than two languages at home, with the second language not being an official language.</p>
+
+<p>(3) Proportion of residents who only speak one language at home.</p>
+
+<h3 id="shap-analyses-on-random-forest-model">SHAP analyses on Random Forest model</h3>
+
+<p>Here, we use the SHapley Additive exPlanations (SHAP) tool to further understand the effects of features in our Random Forest model.
+The variable that we are most interested in, of course, is number of services per capita in the neighborhood area <code class="language-plaintext highlighter-rouge">NBA_services_PC</code>. Two takeaways are worth of mentioning here:</p>
+
+<p>(1) The relationship between <code class="language-plaintext highlighter-rouge">NBA_services_PC</code> and transit use is positive, with the only exception of very large <code class="language-plaintext highlighter-rouge">NBA_services_PC</code> values.</p>
+
+<p>(2) Among other variables, <code class="language-plaintext highlighter-rouge">vn34_ultimate_vn33</code> (proportion of married or common-law couples among all residents) has highest frequency of interaction with <code class="language-plaintext highlighter-rouge">NBA_services_PC</code>. The relationship between <code class="language-plaintext highlighter-rouge">NBA_services_PC</code> and transit use seems to be more positive for areas with high proportions of married people.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit4/plots/SHAP_NBA_services.png" alt="Plot: Shap dependency service pc" /></p>
+
+<p>Another variable that we are interested in is <code class="language-plaintext highlighter-rouge">NBA_stops_PC</code>, the number of stops in the neighborhood area. As we can see in the following plot, it also has a positive, albeit weaker relationship with transit use. Also interestingly, there seems to be a strong interaction between <code class="language-plaintext highlighter-rouge">NBA_stops_PC</code> and <code class="language-plaintext highlighter-rouge">vn142_ultimate_vn131</code>, which is the proportion of people who speak an non-official language as their mother tongue. For DAs with more presence of such population, the relationship between transit stops and public transportation use seems stronger.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit4/plots/SHAP_NBA_stops.png" alt="Plot: Shap dependency stops pc" /></p>
+
+<p>To gain an understanding of all key features that impact transit use at the DA level, please see the charts below.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit4/plots/SHAP_top_variables.png" alt="Plot: Shap summary" /></p>
+
+<h3 id="summary">Summary</h3>
+
+<p>We have not figured out where GVA’s public transportation agency should prioritize in terms of service and infrastructure development yet. However, the analyses above provide valuable information about the relationship between demographic characters and transit use in GVA, especially the role of access to public transportation services and stops.</p>
+
+<p>Geographically speaking, areas in and around the downtown core tend have higher public transit use, something hardly surprising given our prior analyses on the spatial distribution of transit services in the area. However, variations within the downtown core should not be overlooked.</p>
+
+<p>In addition to geographical location, factors that impact transit use are diverse, seen across most demographic aspects covered by the census. DA level variables in ethnicity, family structure, housing, immigration, labor and language all make to the top of importance.</p>
+
+<p>Access to transit does seem to affect people’s transit use, with all other variables above taken into consideration. Both our models agree that number of services per capita in a DA’s neighborhood area is a more important feature than the number of stops per capita. Our LASSO model does not even give the number of stops per capita a non-zero coefficient. This seems to suggest that the authority should pour more of their resources into strengthening transit services at existing locations, instead of setting up new stops.</p>
+
+<p>Exactly how important are transit services and stops? In fact, the two models diverge to a certain degree. What we can be confident about for now, however, is that number of transit services per capita is among the 5% most important numeric features, and is related to transit use positively.</p>
+
+<h2 id="policy-recommendations">Policy recommendations</h2>
+
+<p>How should our analyses inform decision makers? In the last section of this project, I will bring back the whole dataset and identify areas that GVA’s transportation agency should pour its resources to. Bearing in mind that the government’s resources are limited and come from tax payers’ money, we should assume that it can only increase access to transit for a limited number of neighborhoods. Therefore, the selected neighborhoods should be places where the same increase in transit access lead to the most <strong>increase in proportion of people using transit</strong>, which is defined as the following:</p>
+
+<p>increase in proportion of people using transit = proportion of people using transit as predicted by the model, after increase in transit access - current proportion of people using transit as predicted by the model</p>
+
+<h3 id="two-scenarios">Two scenarios</h3>
+
+<p>I will specify two scenarios in which access to public transit services increases.</p>
+
+<h4 id="scenario-1">Scenario 1</h4>
+
+<p>(1) I will create a hypothetical dataset (<code class="language-plaintext highlighter-rouge">X_1</code>) where each DA’s <code class="language-plaintext highlighter-rouge">NBA_services_PC</code> increases by a fixed amount (10% of average current NBA_services_PC across all DAs in GVA, or about 1.2 percentage points). I will then identify DAs where transit use rate increases the most, measured by percentage point increase.</p>
+
+<p>The following two maps identify DAs with top 10% percentage point increase in transit use if number of transit services per person increases by about 1.2 in the neighborhood area.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit4/plots/X_1_LASSO.png" alt="Map: LASSO Scenario 1" /></p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit4/plots/X_1_rf.png" alt="Map: Random Forest Scenario 1" /></p>
+
+<p>Are our predictions of increase in transit use similar between the two models? I have calculated the Pearson correlation coefficient between two sets of predictions, which stands at 0.768. This result is satisfactory.</p>
+
+<h4 id="scenario-2">Scenario 2</h4>
+
+<p>(2) I will create a hypothetical dataset (<code class="language-plaintext highlighter-rouge">X_2</code>) where each DA’s <code class="language-plaintext highlighter-rouge">NBA_services_PC</code> increases by a fixed percentage (10%) of current <code class="language-plaintext highlighter-rouge">NBA_services_PC</code>. I will then identify as a percentage of current transit use rate increases the most, measured by percentage increase.</p>
+
+<p>The following two maps identify DAs with top 10% percentage point increase in transit use if number of transit services per person increases by 10 percent of the current value, in the neighborhood area.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit4/plots/X_2_LASSO.png" alt="Map: LASSO Scenario 2" /></p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit4/plots/X_2_rf.png" alt="Map: Random Forest Scenario 2" /></p>
+
+<p>The two models’ predictions, under scenario 2, are also quite similar. I have calculated the Pearson correlation coefficient between two sets of predictions, which stands at 0.767.</p>
+
+<h2 id="impact-evaluation">Impact evaluation</h2>
+
+<p>If the public transportation authority of GVA does indeed increase service in the key areas, how much increase of transit use can we expect? A more fundamental question is that, although increase in access to public transit does have a positive impact on use of transit in commuting, how many DAs in GVA should be prioritized? The following analyses show that the law of diminishing returns hold here, and the more DAs we target, the less increase in transit use we will see. However, as compared to the baseline scenario where we increase transit services in randomly selected DAs, a policy based on our models still results in far more increase in overall transit use in GVA overall.</p>
+
+<p>I want to point out that here, only the Random Forest model, instead of the LASSO model, is used in the calculations. This is because LASSO is essentially a linear model, and a fixed increase in access to transit will result in the same increase in transit usage, which is not useful in selecting DAs to prioritize.</p>
+
+<h3 id="scenario-1-1">Scenario 1</h3>
+
+<p>The following charts show that as compared to the baseline, a policy to increase transit access informed by our model does result in more increase in public transportation use. For example, if we target DAs with a combined population of 100,000 and increase their number of transit services per capita by 1.2, we are expected to see 0.7 percentage point increase in proportion of people using transit, which translates into 700 more people using transit. By contrast, if we randomly select DAs also with a combined population of 100,000, we are only expected to see 100 more people using transit. If we target DAs with a combined population of 400,000 and and increase their number of transit services per capita by 1.2, we are expected to see 0.4 percentage point increase in proportion of people using transit, which translates into 1600 more people using transit. By contrast, if we randomly select DAs also with a combined population of 400,000, we are only expected to see 400 more people using transit.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit4/plots/X_1_benefited_population_compare.png" alt="Chart: Scenario 1 Benefited Population Compare" /></p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit4/plots/X_1_percentage_point_increase_compare.png" alt="Chart: Scenario 1 PC Point Compare" /></p>
+
+<p>The following two charts put the impact of the policy specified above into context. For example, if we target DAs with a combined population of 200,000, they in average have 12% people commutting using public transit at present. After the policy intervention, the percentage of people using public transit will increase by 0.55 percentage points, or about 5%.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit4/plots/X_1_current_percentage_compare.png" alt="Chart: Scenario 1 Current PC Compare" /></p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit4/plots/X_1_percent_increase_compare.png" alt="Chart: Scenario 1 PC Increase Compare" /></p>
+
+<h3 id="scenario-2-1">Scenario 2</h3>
+
+<p>Simulation results for scenario 2 are similar, as shown below.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit4/plots/X_2_benefited_population_compare.png" alt="Chart: Scenario 2 Benefited Population Compare" /></p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit4/plots/X_2_percentage_point_increase_compare.png" alt="Chart: Scenario 2 PC Point Compare" /></p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit4/plots/X_2_current_percentage_compare.png" alt="Chart: Scenario 2 Current PC Compare" /></p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit4/plots/X_2_percent_increase_compare.png" alt="Chart: Scenario 2 PC Increase Compare" /></p>
+
+<h2 id="discussion">Discussion</h2>
+
+<p>These results should be taken with a grain of salt.</p>
+
+<p>It is unrealistic to expect that some infrastructure development will only increase service in selected DAs while keeping service in other DAs constant. This point has two implications. On the one hand, even the transit authority focuses solely on increasing service in identified areas, other areas across GVA will benefit. On the other hand, a “increasing service by 10% in 10% of all DAs” scenario does not mean that the system’s variable cost will increase by 1% (10% * 10%). Most likely, the real cost increase will be significantly bigger.</p>
+
+<p>In addition, our model only takes into account a limited number of factors, and there are certainly importrant variables which would help to build our predictive models, but we do not have data for. For example, we do not know whether public transportation has been in a DA long enough for people there to have a habit of using transit.</p>
+
+<p>Lastly, there is this fundamental problem of applying inference models to prediction. Without randomized trials, which seems extremely expensive in our case, we cannot know for sure whether the seemlying strong relationship between access to transit service and transit use is causal. Therefore, when we pour resourse into these areas, the outcome may not be as strong as what we might expect.</p>]]></content><author><name>Mark Wang</name><email>kangyumarkwang@gmail.com</email></author><category term="GIS" /><category term="python" /><category term="transit" /><summary type="html"><![CDATA[GIS, Python, transit]]></summary></entry><entry><title type="html">Demographic Characters and Access to Public Transit in Greater Vancouver: Machine Learning Modeling</title><link href="https://zibowangkangyu.github.io/Vancouver_transit3/" rel="alternate" type="text/html" title="Demographic Characters and Access to Public Transit in Greater Vancouver: Machine Learning Modeling" /><published>2020-12-07T00:00:00+00:00</published><updated>2020-12-07T00:00:00+00:00</updated><id>https://zibowangkangyu.github.io/Vancouver_transit3</id><content type="html" xml:base="https://zibowangkangyu.github.io/Vancouver_transit3/"><![CDATA[<p>A shorter high-level summary of the project can be found <a href="https://zibowangkangyu.github.io/Vancouver_transit_summary/">here</a>. For an interactive web application with simulation results of priority neighborhoods, see <a href="https://gva-transit-ml.herokuapp.com/">here</a>.</p>
+
+<p>This is part 3 of a series of in-depth posts about this project including</p>
+
+<ul>
+  <li><a href="https://zibowangkangyu.github.io/Vancouver_transit1/">data sources</a></li>
+  <li><a href="https://zibowangkangyu.github.io/Vancouver_transit2/">key variables</a></li>
+  <li><a href="https://zibowangkangyu.github.io/Vancouver_transit3/">machine learning modeling</a>, and</li>
+  <li><a href="https://zibowangkangyu.github.io/Vancouver_transit4/">model analyses and recommendations</a>.</li>
+</ul>
+
+<p>For the Jupyter Notebook with full analysIs, please see <a href="https://nbviewer.jupyter.org/github/ZIBOWANGKANGYU/Vancouver_transit/blob/master/Report.ipynb">here</a>. The GitHub repo of this analysis is located <a href="https://github.com/ZIBOWANGKANGYU/Vancouver_transit">here</a>.</p>
+
+<h2 id="remove-extreme-observations">Remove extreme observations</h2>
+
+<p>Now that we have tabular data of demographic characters, transit access and transit usage down to the DA level, I will pre-process the data so that it is ready to be put into machine learning algorithms. Firstly, features with all NA data are removed (in fact there are two such features). Then, I will remove rows that have irregular, or extreme values for important variables, as shown in the following table:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Removal Criteria</th>
+      <th>Number of DAs removed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>DAs with zero population in 2016</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <td>DAs with zero land size in 2016</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>DAs with with land size 2 standard deviations above the mean</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <td>DAs with with population density 2 standard deviations above the mean</td>
+      <td>37</td>
+    </tr>
+    <tr>
+      <td>DAs with with population density 2 standard deviations below the mean</td>
+      <td>165</td>
+    </tr>
+    <tr>
+      <td>DAs without transit service or stops in the neighborhood area</td>
+      <td>49</td>
+    </tr>
+    <tr>
+      <td>DAs whose proportions of residents using transit are invalid (NAs)</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The following map shows in brown DAs that have been removed from our next steps of analysis.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit3/plots/DA_removed.png" alt="Map: DA removed for analyses" /></p>
+
+<h2 id="feature-engineering-of-census-data">Feature engineering of census data</h2>
+
+<p>Most explanatory variables of this study come from the 2016 census, except for two, namely the number of transit services in the neighborhood area per person, and the number of transit stops in the neighborhood area per person, which are from the GTFS Data. I have also calculated some proportional relationships between census variables and added them to our analyses, and removed some confounding variables.</p>
+
+<h3 id="create-proportional-variables">Create proportional variables</h3>
+
+<p>Proportional variables are calculated based on numeric features in the census data. There are two types of numeric columns:</p>
+
+<ul>
+  <li>
+    <p>(1) Proportions or averages. An example of proportion is “Population density, per square kilometer”, and an example of average is “Average Household Size.”</p>
+  </li>
+  <li>
+    <p>(2) Counts. Most numeric variables are in this category, for example (number of) “Private households”.</p>
+  </li>
+</ul>
+
+<p>We will put type (1) variables directly into our models. For type (2) variables, I divide them into two sub-types:</p>
+
+<ul>
+  <li>(2.1) Counts of subjects belonging to the widest possible category in a DA, for example, total number of people who are immigrants.</li>
+</ul>
+
+<p>We will put type (2.1) variables directly into our models.</p>
+
+<ul>
+  <li>
+    <p>(2.2) Counts of subjects belonging to a sub-category of a type (2.1) variable in a DA. There are further two sub-types:</p>
+  </li>
+  <li>
+    <p>(2.2.1) Counts of subjects belonging to an immediate sub-category of a type (2.1) variable, for example, total number of immigrants who are born in Asia.</p>
+  </li>
+</ul>
+
+<p>We will use type (2.2.1) variables in two ways.
+Firstly, we will put them directly into our models.
+Secondly, we will calculate the proportion of each type (2.2.1) variable to the type (2.1) variable that it belongs to.</p>
+
+<ul>
+  <li>(2.2.2) Counts of subjects belonging to a further-off sub-category of a type (2.1) variable, for example, total number of immigrants who are born in India, Asia.</li>
+</ul>
+
+<p>We will use type (2.2.2) variables in three ways.
+Firstly, we will put them directly into our models.
+Secondly, we will calculate the proportion of each type (2.2.2) variable to the type (2.1) variable that it ultimately (but not immediately, by definition) belongs to.
+Thirdly, we will calculate the proportion of each type (2.2.2) variable to the type (2.2.1) or type (2.2.2) variable that it immediately belongs to.</p>
+
+<p>The following chart explains types of numeric variables.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit3/plots/num_var_types.png" alt="Chart: types of numeric variables" /></p>
+
+<h3 id="remove-confounding-variables">Remove confounding variables</h3>
+
+<p>I have also removed variables that sit on the causal chain from access to transit to proportion of transit use. Such variables, theoretically, are impacted by the access to public transportation, and can in turn impact the use of public transportation. Confounding variables include:</p>
+
+<ul>
+  <li>Mode of Commuting</li>
+  <li>Duration of Commuting</li>
+  <li>Time of the day when leaving for work</li>
+</ul>
+
+<p>In total, 572 new proportional variables have been created, and 76 confounding variables have been excluded.</p>
+
+<h2 id="create-train-and-test-splits">Create train and test splits</h2>
+
+<p>There are 2544 observations in the train split and 636 observations in the test set.</p>
+
+<h3 id="preliminary-analyses">Preliminary analyses</h3>
+
+<p>Before stepping into modeling, I did some quick sanity check on the correlation between access to, and public usage of, transit across DAs in GVA. The two plots below show that their relationships seem to be positive, which is expected.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit3/plots/service_PC_prop_public.png" alt="Density plot: service per capita and public transit proportion" /></p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit3/plots/stop_PC_prop_public.png" alt="Density plot: stops per capita and public transit proportion" /></p>
+
+<h2 id="modeling">Modeling</h2>
+
+<h3 id="model-selection-and-hyperparameter-tuning">Model selection and hyperparameter tuning</h3>
+
+<p>I selected three models, namely (1) dummy regression, (2) LASSO, and (3) Random Forest regression.</p>
+
+<ul>
+  <li>Dummy regression</li>
+</ul>
+
+<p>The dummy regression model has both training and testing R-squared close to zero, which is expected.</p>
+
+<ul>
+  <li>LASSO regression</li>
+</ul>
+
+<p>I tuned the <code class="language-plaintext highlighter-rouge">alpha</code> hyperparameter in the model using grid search. As shown in the table below, an <code class="language-plaintext highlighter-rouge">alpha</code> value of 0.0001 turns out to be the best.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Validation score rank</th>
+      <th>Mean validation R-squared</th>
+      <th>Alpha hyperparameter</th>
+      <th>Mean Fit Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>0.680</td>
+      <td>1.00E-04</td>
+      <td>13.815</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>0.651</td>
+      <td>1.00E-03</td>
+      <td>19.746</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0.627</td>
+      <td>1.00E-05</td>
+      <td>14.588</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>0.518</td>
+      <td>1.00E-02</td>
+      <td>21.070</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>0.354</td>
+      <td>1.00E-01</td>
+      <td>14.889</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>0.255</td>
+      <td>1.00E+00</td>
+      <td>2.017</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>0.113</td>
+      <td>1.00E+01</td>
+      <td>1.835</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>-0.001</td>
+      <td>1.00E+02</td>
+      <td>1.322</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>-0.001</td>
+      <td>1.00E+03</td>
+      <td>1.279</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>-0.001</td>
+      <td>1.00E+04</td>
+      <td>1.002</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>Random Forest model</li>
+</ul>
+
+<p>I tuned <code class="language-plaintext highlighter-rouge">max_depth</code>, <code class="language-plaintext highlighter-rouge">max_features</code>, <code class="language-plaintext highlighter-rouge">min_samples_leaf</code>, <code class="language-plaintext highlighter-rouge">min_samples_split</code>, and <code class="language-plaintext highlighter-rouge">n_estimators</code> hyperparameters using randomized search. The table below shows the best combination of hyperparameters.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Validation score rank</th>
+      <th>Mean validation R-squared</th>
+      <th>Max_depth hyperparameter</th>
+      <th>Max_features hyperparameter</th>
+      <th>Min_samples_leaf hyperparameter</th>
+      <th>Min_samples_split hyperparameter</th>
+      <th>N_estimators hyperparameter</th>
+      <th>Mean Fit Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>0.6760</td>
+      <td>100</td>
+      <td>auto</td>
+      <td>2</td>
+      <td>5</td>
+      <td>2000</td>
+      <td>1401.222</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>0.6759</td>
+      <td>100</td>
+      <td>auto</td>
+      <td>1</td>
+      <td>5</td>
+      <td>200</td>
+      <td>142.685</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0.6755</td>
+      <td>40</td>
+      <td>auto</td>
+      <td>1</td>
+      <td>2</td>
+      <td>200</td>
+      <td>155.870</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>0.6751</td>
+      <td>40</td>
+      <td>auto</td>
+      <td>2</td>
+      <td>10</td>
+      <td>600</td>
+      <td>336.548</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>0.6745</td>
+      <td>100</td>
+      <td>auto</td>
+      <td>2</td>
+      <td>10</td>
+      <td>2000</td>
+      <td>1302.495</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>0.6720</td>
+      <td>40</td>
+      <td>auto</td>
+      <td>1</td>
+      <td>5</td>
+      <td>200</td>
+      <td>144.661</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>0.6657</td>
+      <td> </td>
+      <td>sqrt</td>
+      <td>2</td>
+      <td>2</td>
+      <td>200</td>
+      <td>5.166</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>0.6642</td>
+      <td>100</td>
+      <td>sqrt</td>
+      <td>1</td>
+      <td>10</td>
+      <td>2000</td>
+      <td>45.181</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>0.6639</td>
+      <td>100</td>
+      <td>sqrt</td>
+      <td>4</td>
+      <td>2</td>
+      <td>2000</td>
+      <td>42.367</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>0.6630</td>
+      <td>10</td>
+      <td>sqrt</td>
+      <td>2</td>
+      <td>5</td>
+      <td>600</td>
+      <td>12.829</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="model-evaluation">Model evaluation</h3>
+
+<p>After hyperparameter tuning, I compared the performance, as measured by root mean squared error (RMSE), among the three models on the whole train split. Random forest regression seems to perform the best among the three models.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Train Split RMSE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Dummy Model</td>
+      <td>0.120</td>
+    </tr>
+    <tr>
+      <td>LASSO Regression</td>
+      <td>0.054</td>
+    </tr>
+    <tr>
+      <td>Random Forest Regression</td>
+      <td>0.027</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>I then fitted the best Random Forest model with the test split, and got a RMSE of about 0.070.</p>]]></content><author><name>Mark Wang</name><email>kangyumarkwang@gmail.com</email></author><category term="GIS" /><category term="python" /><category term="transit" /><summary type="html"><![CDATA[GIS, Python, transit]]></summary></entry><entry><title type="html">Demographic Characters and Access to Public Transit in Greater Vancouver: Key Variables</title><link href="https://zibowangkangyu.github.io/Vancouver_transit2/" rel="alternate" type="text/html" title="Demographic Characters and Access to Public Transit in Greater Vancouver: Key Variables" /><published>2020-09-28T00:00:00+00:00</published><updated>2020-09-28T00:00:00+00:00</updated><id>https://zibowangkangyu.github.io/Vancouver_transit2</id><content type="html" xml:base="https://zibowangkangyu.github.io/Vancouver_transit2/"><![CDATA[<p>A shorter high-level summary of the project can be found <a href="https://zibowangkangyu.github.io/Vancouver_transit_summary/">here</a>. For an interactive web application with simulation results of priority neighborhoods, see <a href="https://gva-transit-ml.herokuapp.com/">here</a>.</p>
+
+<p>This is part 2 of a series of in-depth posts about this project including</p>
+
+<ul>
+  <li><a href="https://zibowangkangyu.github.io/Vancouver_transit1/">data sources</a></li>
+  <li><a href="https://zibowangkangyu.github.io/Vancouver_transit2/">key variables</a></li>
+  <li><a href="https://zibowangkangyu.github.io/Vancouver_transit3/">machine learning modeling</a>, and</li>
+  <li><a href="https://zibowangkangyu.github.io/Vancouver_transit4/">model analyses and recommendations</a>.
+For the Jupyter Notebook with full analysIs, please see <a href="https://nbviewer.jupyter.org/github/ZIBOWANGKANGYU/Vancouver_transit/blob/master/Report.ipynb">here</a>. The GitHub repo of this analysis is located <a href="https://github.com/ZIBOWANGKANGYU/Vancouver_transit">here</a>.</li>
+</ul>
+
+<h2 id="access-to-public-transit">Access to public transit</h2>
+
+<p>GTFS is a great data source to gauge access to public transit from. This analysis defines access to public transit in the following two ways:</p>
+
+<p>(1) Number of transit services available in the neighborhood area of a DA, divided by the total population of the DA.</p>
+
+<p>(2) Number of transit stops in the the neighborhood area of a DA, divided by the total population of the DA.</p>
+
+<p>The neighborhood area of a DA is defined as all points within the geographical boundary of the DA, along with a buffer zone that includes all points around the DA where the straight line distance between that point, and at least one point in the DA, is less than 500 meters.</p>
+
+<p>The following map shows the DAs with top 10% of transit service per capita. Such area are concentrated in the eastern part of the downtown core, and the areas to its immediate east. Kitsland also sees relatively high access to transit service.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit2/plots/NBA_services_PC_10pc.png" alt="Map: Top NBA Services PC" /></p>
+
+<p>The following map shows DAs with top 10% transit stops per capita. The distribution of such areas is more widespread across GVA, extending to nearby cities including Surrey, Richmond, Burnaby, Coquitlam and Maple Ridge.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit2/plots/NBA_stops_PC_10pc.png" alt="Map: Top NBA Stops PC" /></p>
+
+<h2 id="usage-of-public-transit">Usage of public transit</h2>
+
+<p>On the other side of the equation is residents’ usage of public transit. Fortunately, Canada’s 2016 census provides abundant information about residents’ usage of public transit to the DA level. In the “Journey to Work” section, the numbers of residents falling into the following categories are provided:</p>
+<ul>
+  <li>commuters (aged 15 or older, living in private housing)</li>
+  <li>commuters using truck, car or van to go to work as drivers</li>
+  <li>commuters using truck, car or van to go to work as passengers</li>
+  <li>commuters using public transport</li>
+  <li>people who walk to work</li>
+  <li>people who cycle to work</li>
+  <li>people who commute to work with other methods</li>
+</ul>
+
+<p>As shown in the following chart, for most DAs, the majority of people commute as drivers of private vehicles. However, there is a substantial number of DAs where around (or a little bit less than) half residents commute use public transit. For almost all DAs, only a tiny proportion of commuters bike, walk or use private vehicles as a passenger.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit2/plots/DA_mode.png" alt="Density Plot: DA mode" /></p>
+
+<p>In average, in the Greater Vancouver Area, 20.4% of residents commute using public transportation. Where do people use public transit the most? As shown in the followng map, the corridor along Highway 1A from Mount Pleasant through East Vancouver, Metrotown to New Westerminster see relatively high proportion of transit use. In fact, New Westminster has the highest proportion of residents (31.3%) commuting using public transportation in the GVA. In addition, areas including Surrey, South Vancouver and Sunset also have relatively high proportion of people using public transit.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit2/plots/DA_public_prop.png" alt="Map: DA public prop" /></p>
+
+<h2 id="transit-duration-and-destination">Transit duration and destination</h2>
+
+<p>The census also tells us about people’s transit destinations, and the average commuting time of different DAs. In the Greater Vancouver Area, the average medium commute duration across CSDs is about 30.2 minutes. As shown in the following map, people living in DAs in the west half of the metropolitan area spend relatively less time commuting, whereas people living in areas in the east, including Burnaby, Coquitlam and Surrey spend longer time in commute.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit2/plots/DA_commute_duration.png" alt="Map: DA commute duration" /></p>
+
+<p>When it comes to the destination of commuting, an average of 44.1% of residents commute within their CSDs in the Greater Vancouver Area. The City of Vancouver has the highest proportion (67.8%) of residents commuting within the CSD. The map below shows the proportions of people who transit to work within their CSDs, by CSD. We can see that CSDs immediately neighboring the city of Vancouver have the lowest proportions of people working within own CSDs, probably because people there tend to transit to the City to work.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit2/plots/commute_within_csd.png" alt="Map: CSD commute destination" /></p>]]></content><author><name>Mark Wang</name><email>kangyumarkwang@gmail.com</email></author><category term="GIS" /><category term="python" /><category term="transit" /><summary type="html"><![CDATA[GIS, Python, transit]]></summary></entry><entry><title type="html">Demographic Characters and Access to Public Transit in Greater Vancouver: Data Sources</title><link href="https://zibowangkangyu.github.io/Vancouver_transit1/" rel="alternate" type="text/html" title="Demographic Characters and Access to Public Transit in Greater Vancouver: Data Sources" /><published>2020-07-10T00:00:00+00:00</published><updated>2020-07-10T00:00:00+00:00</updated><id>https://zibowangkangyu.github.io/Vancouver_transit1</id><content type="html" xml:base="https://zibowangkangyu.github.io/Vancouver_transit1/"><![CDATA[<p>A shorter high-level summary of the project can be found <a href="https://zibowangkangyu.github.io/Vancouver_transit_summary/">here</a>. For an interactive web application with simulation results of priority neighborhoods, see <a href="https://gva-transit-ml.herokuapp.com/">here</a>.</p>
+
+<p>This is part 1 of a series of in-depth posts about this project including</p>
+
+<ul>
+  <li><a href="https://zibowangkangyu.github.io/Vancouver_transit1/">data sources</a></li>
+  <li><a href="https://zibowangkangyu.github.io/Vancouver_transit2/">key variables</a></li>
+  <li><a href="https://zibowangkangyu.github.io/Vancouver_transit3/">machine learning modeling</a>, and</li>
+  <li><a href="https://zibowangkangyu.github.io/Vancouver_transit4/">model analyses and recommendations</a>.</li>
+</ul>
+
+<p>For the Jupyter Notebook with full analysIs, please see <a href="https://nbviewer.jupyter.org/github/ZIBOWANGKANGYU/Vancouver_transit/blob/master/Report.ipynb">here</a>. The GitHub repo of this analysis is located <a href="https://github.com/ZIBOWANGKANGYU/Vancouver_transit">here</a>.</p>
+
+<h2 id="about-the-project">About the Project</h2>
+
+<p>Vancouver has one of the best public transit systems in North America. However, to what extent is access to public transit equitable among residents in the metropolitan area? From a plan and management perspective, what are the best locations to develop public transit infrastructure so that more people use public transit to commute? This project will explore accessibility to Vancouver’s public transit system across regions, and try to link it to people’s modes of commute.</p>
+
+<p>This will be a series of blog posts and data visualizations. I will firstly explore the public transit data and present how public transit routes and stops are distributed geographically. I will then use the 2016 Census data to break the Greater Vancouver area into dissemination areas, and measure their access to public transit. I will then dig into 2016 Census data, especially records about people’s commute, and build machine learning models to identify areas where access to public transportation infrastructure restraints people’s transit use.</p>
+
+<h2 id="data">Data</h2>
+
+<p>There are two main data sources for this project. Detailed information on Vancouver’s mass transit system is obtained through <a href="https://transitfeeds.com/">Open Mobility Data</a> in GTFS form. Canada’s <a href="https://www12.statcan.gc.ca/census-recensement/2016/dp-pd/index-eng.cfm">2016 Census</a> data gives detailed information on the demographic characters of neighborhoods across the Greater Vancouver area.</p>
+
+<h3 id="gtfs-data">GTFS Data</h3>
+
+<p>According to the <a href="https://gtfs.org/gtfs-background">official website</a> of GTFS, it was originally known as Google Transit Feed Specification, a format of public transit data that is now used by urban transit agencies around the world. I will use GTFS data on Vancouver’s mass transit system as of June 6, 2020.</p>
+
+<p>GTFS provides two types of public transit information, namely <code class="language-plaintext highlighter-rouge">Static</code> and <code class="language-plaintext highlighter-rouge">Realtime</code>. <code class="language-plaintext highlighter-rouge">Static</code> data. Generally speaking, provides information on how the transit system are <strong>planned</strong> to run. By contrast, <code class="language-plaintext highlighter-rouge">realtime</code> data gives information about how the transit system is <strong>actually running</strong> in real time. This project only uses the <code class="language-plaintext highlighter-rouge">static</code> part of GTFS data.</p>
+
+<p>There are various tables in <code class="language-plaintext highlighter-rouge">static</code> data. I mainly use five of them: <code class="language-plaintext highlighter-rouge">routes</code>, <code class="language-plaintext highlighter-rouge">shapes</code>, <code class="language-plaintext highlighter-rouge">stops</code>, <code class="language-plaintext highlighter-rouge">stop_times</code> and <code class="language-plaintext highlighter-rouge">trips</code>.</p>
+
+<ul>
+  <li>Routes</li>
+</ul>
+
+<p>A route is a group of trips that are displayed to riders as a single service. There are 233 routes in Vancouver’s public transit system. Different modes of transportation are identified: among all routes, 3 are subways, one is rail, 228 are buses, and one is ferry.</p>
+
+<ul>
+  <li>Trips</li>
+</ul>
+
+<p>A trip is a sequence of two or more stops that occur during a specific time period, and one route usually has multiple trips. 122746 trips are identified in Vancouver: among them, route Expo Line has 4778 trips, which is the most among all routes, and route Dunbar/Downtown has 13 trips, which is the least among all routes.</p>
+
+<p>As shown in the histogram below, each route has in average about 200 trips. Routes with more than 1,000 trips are rare.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit1/plots/stops_cnt_trips_hist.png" alt="Histogram: number of trips per route" /></p>
+
+<ul>
+  <li>Shapes</li>
+</ul>
+
+<p>A trip is geographically linked with a shape, which describes the path that a vehicle travels along a route alignment. According to GTFS, stops on a trip should “lie within a small distance of the shape for that trip.”</p>
+
+<p>From the shape table, we can get more information about the length of each trip. For Vancouver, the median trip distance is 12.00 km. Route West Coast Express is 67.9 kms long, which is the longest route. This route stretches from downtown Vancouver to Mission, a town far up the Fraser River. Its map is presented below.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit1/plots/lines_max.png" alt="Map: longest route" /></p>
+
+<ul>
+  <li>Stops</li>
+</ul>
+
+<p>GTFS defines stops as places where vehicles pick up or drop off riders. Vancouver’s public transportation has 8919 stops identified.</p>
+
+<p>The following maps show all the stops, and the ten busiest among them. Most of the busiest stops are in the downtown area.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit1/plots/stops.png" alt="Map: transit stops" /></p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit1/plots/stops_bz.png" alt="Map: the busiest stops " /></p>
+
+<ul>
+  <li>Stop-times</li>
+</ul>
+
+<p>The stop-times table gives detailed information about time when a vehicle arrives at and departs from stops for each trip. With this data, we can gain many important insights into the the operation of stops in the transit system.</p>
+
+<p>How busy are the public transit stops? The map below colors the stops by the number of trips they serve have per day. The busier stops are in the City of Vancouver, as well as along major roads.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit1/plots/stops_cnt_trips.png" alt="Map: stops by number of trips per day" /></p>
+
+<h3 id="2016-census-data">2016 Census Data</h3>
+
+<p>The <a href="https://www12.statcan.gc.ca/census-recensement/index-eng.cfm">Canadian census</a> conducted in 2016 provides important demographic and socio-economic information about neighborhoods in the Greater Vancouver Area. Greater Vancouver Area (GVA) is one of the 293 Census Divisions (CDs) in Canada, and we confine out analyses there.</p>
+
+<p>The amount of data available from the census is enormous, and for this project, it is essential to understand how data is reported in a hierarchy of geographies. A useful graphical illustration can be found <a href="https://www12.statcan.gc.ca/census-recensement/2016/ref/dict/figures/f1_1-eng.cfm">here</a>. In short, this study utilizes data down to the Dissemination Area (DA) level, which, according to Statistics Canada:</p>
+
+<blockquote>
+  <p>is a small, relatively stable geographic unit composed of one or more adjacent dissemination blocks with an average population of 400 to 700 persons based on data from the previous Census of Population Program. It is the smallest standard geographic area for which all census data are disseminated.</p>
+</blockquote>
+
+<p>Moreover, data at the DA level will also be aggregated to the Census Subdivision (CSD) and Census Consolidated Division (CCD) levels.</p>
+
+<h4 id="das-in-gva">DAs in GVA</h4>
+
+<p>There are 3450 DAs in GVA. The following map shows the boundaries of about 322 DAs in Burnaby CSD.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit1/plots/DA_Burnaby.png" alt="Map: DAs in the Burnaby Area" /></p>
+
+<p>The following table summarizes the basic demographic and geographical characters of DAs in GVA.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>2016 Pop.</th>
+      <th>Total Private Dwellings</th>
+      <th>Pop. per km2</th>
+      <th>Land Area (km2)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>mean</td>
+      <td>714</td>
+      <td>297.9</td>
+      <td>6105.4</td>
+      <td>0.8</td>
+    </tr>
+    <tr>
+      <td>std</td>
+      <td>509.1</td>
+      <td>254.3</td>
+      <td>10170.7</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <td>min</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>25%</td>
+      <td>477</td>
+      <td>176</td>
+      <td>2583.4</td>
+      <td>0.1</td>
+    </tr>
+    <tr>
+      <td>50%</td>
+      <td>586</td>
+      <td>229</td>
+      <td>4091.7</td>
+      <td>0.1</td>
+    </tr>
+    <tr>
+      <td>75%</td>
+      <td>766.5</td>
+      <td>328</td>
+      <td>6875.5</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <td>max</td>
+      <td>8778</td>
+      <td>5631</td>
+      <td>454783</td>
+      <td>796.1</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>Population</li>
+</ul>
+
+<p>In average, each DA has 714 persons as of 2016 census. The following map shows the population counts across DAs. DAs with most population are not concentrated in the downtown area. Instead, they are scattered in Surrey and Coquitlam.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit1/plots/pop2016.png" alt="Map: Population counts by DA" /></p>
+
+<ul>
+  <li>Population density</li>
+</ul>
+
+<p>The following map shows the population density among DAs in GVA. The majority of DAs have relatively low population density, and dense DAs are mostly near the downtown area. The following map highlights the DAs with top 10% population density in GVA. Most such DAs are distributed in downtown, Kitsilano and Fairview areas.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/Vancouver_transit1/plots/pop_dense201610pc.png" alt="Map: Population density by DA" /></p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>From 2016 census and GTFS data, we can extract variables that interest us. As a policy question, the study intends to figure out as Vancouver’s public transit authority distributes additional transportation capacities, where and when it should prioritize to maximize the usage of public transit across the metropolitan area. We will discuss the key variables in the next post.</p>]]></content><author><name>Mark Wang</name><email>kangyumarkwang@gmail.com</email></author><category term="GIS" /><category term="python" /><category term="transit" /><summary type="html"><![CDATA[GIS, Python, transit]]></summary></entry><entry><title type="html">Geographical Analyses in Python</title><link href="https://zibowangkangyu.github.io/python_geo/" rel="alternate" type="text/html" title="Geographical Analyses in Python" /><published>2019-11-30T00:00:00+00:00</published><updated>2019-11-30T00:00:00+00:00</updated><id>https://zibowangkangyu.github.io/python_geo</id><content type="html" xml:base="https://zibowangkangyu.github.io/python_geo/"><![CDATA[<h1 id="abstract">Abstract</h1>
+
+<p>This project is my homework submitted to the <em>Intro to Python GIS</em> course offered <a href="https://automating-gis-processes.github.io/CSC18/index.html">here</a> by CSC Finland, IT Center for Science.</p>
+
+<p>In the first part, I created a static map showing the nearest distance from anywhere in downtown Stockholm. In addition, I calculated the average public transportation commuting time in the city to the Railway station.</p>
+
+<p>In the second part, I created an interactive map showing the convenience of public transportation to Railway Station across the city. Please see the final interactive map product <a href="https://zibowangkangyu.github.io/pythonDS/accessibility_map_Helsinki">here</a>.</p>
+
+<p>For code and more visualizations, please see <a href="https://zibowangkangyu.github.io/pythonDS/">Project page</a>.</p>
+
+<p>The project folder can be found <a href="https://github.com/ZIBOWANGKANGYU/pythonDS">here</a></p>
+
+<h1 id="static-mapping">Static mapping</h1>
+
+<p>This static map shows the distance from each cell to the nearest road. Firstly, <code class="language-plaintext highlighter-rouge">dissolve</code> function of <code class="language-plaintext highlighter-rouge">geopandas</code> is used to combine multiple road geometries into one single multiple shape. Then, <code class="language-plaintext highlighter-rouge">nearest_points</code> of <code class="language-plaintext highlighter-rouge">shapely</code> is used to identify closet point on the roads shape that is closest to each cell (centroid used). I then used the <code class="language-plaintext highlighter-rouge">distance</code> method to calculate the minimum distances.</p>
+
+<p>I also calculated the weighted public transportation commuting time from each cell to the Railway Station. I calculated the centroid of each population cell, and got their commuting times by overlapping them with the travel time shapefile. Then I averaged average commuting time weighted by populaiton.</p>
+
+<p>The average public transportation commute time is 37.89 minutes</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/pythonDS/plots/static.png" alt="Static map: distance to road" /></p>
+
+<h1 id="interactive-mapping">Interactive mapping</h1>
+
+<p>I measured the convenience of public transportation by the ratio of public transportation commuting time to car commuting time. Then I used <code class="language-plaintext highlighter-rouge">bokeh</code> package to develop an <a href="https://zibowangkangyu.github.io/pythonDS/accessibility_map_Helsinki">interactive</a> map showing this index.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/pythonDS/plots/interactive.png" alt="Interactive map: convenience of public transportation" /></p>]]></content><author><name>Mark Wang</name><email>kangyumarkwang@gmail.com</email></author><category term="GIS" /><category term="python" /><category term="interactive mapping" /><summary type="html"><![CDATA[GIS, Python, interactive mapping]]></summary></entry><entry><title type="html">Sales Forecast for a Wholesale Club Using Traditional Time Series and Machine Learning Models</title><link href="https://zibowangkangyu.github.io/salesforecast/" rel="alternate" type="text/html" title="Sales Forecast for a Wholesale Club Using Traditional Time Series and Machine Learning Models" /><published>2019-10-20T00:00:00+00:00</published><updated>2019-10-20T00:00:00+00:00</updated><id>https://zibowangkangyu.github.io/salesforecast</id><content type="html" xml:base="https://zibowangkangyu.github.io/salesforecast/"><![CDATA[<h1 id="abstract">Abstract</h1>
+
+<p>I finished this project as an algorithm development intern in a wholesale club. Using historical data on sales, price and exchange rate, this project predicts sales at the weekly level four months into the future.
+Combining traditional time series methods with machine learning tools, this project is able to cut forecast RMSE by half. However,  tremondous space of improment still exists. Currently, machine learning models does not significanty improve the performance of well-developed traditional models. I figure that a larger dataset, with more contectual information is hopeful to make machine learning more powerful. Also, the performance of uni-variate neural network model is satisfactory, and the use of more complex deep learning models will also be key to improving performance.</p>
+
+<p>For code and more visualizations, please see <a href="https://zibowangkangyu.github.io/sales_forecast">Project page</a>.</p>
+
+<p>The project folder can be found <a href="https://github.com/ZIBOWANGKANGYU/sales_forecast">here</a></p>
+
+<h1 id="raw-data">Raw data</h1>
+
+<p>The project uses two datasets. One contains sales data of one item in one club (store). The other contains data of items combined the category in this store. The first dataset is shown below:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>TransactionDate</td>
+      <td>ClubNumber</td>
+      <td>Country</td>
+      <td>number_transactions</td>
+      <td>number_members</td>
+      <td>sales_usd</td>
+      <td>sales_local</td>
+      <td>exchange_rate</td>
+      <td>quantity</td>
+      <td>item</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <td>2015-01-02</td>
+      <td>6101 Colombia</td>
+      <td>100</td>
+      <td>97</td>
+      <td>820.5600</td>
+      <td>1963416</td>
+      <td>0.000418000</td>
+      <td>104</td>
+      <td>732578</td>
+      <td>Kitchen Trash Bag</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>2015-01-03</td>
+      <td>6101 Colombia</td>
+      <td>106</td>
+      <td>101</td>
+      <td>986.2600</td>
+      <td>2359875</td>
+      <td>0.000418000</td>
+      <td>125</td>
+      <td>732578</td>
+      <td>Kitchen Trash Bag</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>2015-01-04</td>
+      <td>6101 Colombia</td>
+      <td>22</td>
+      <td>20</td>
+      <td>986.2600</td>
+      <td>2359875</td>
+      <td>0.000418000</td>
+      <td>125</td>
+      <td>732578</td>
+      <td>Kitchen Trash Bag</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The second dataset is shown below:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>TransactionDate</td>
+      <td>Category_Sales_usd</td>
+      <td>Category_Sales_local</td>
+      <td>Category_quantity</td>
+    </tr>
+    <tr>
+      <td>2015-01-02</td>
+      <td>1783.520</td>
+      <td>4267123</td>
+      <td>251</td>
+    </tr>
+    <tr>
+      <td>2015-01-03</td>
+      <td>1922.930</td>
+      <td>4600721</td>
+      <td>241</td>
+    </tr>
+    <tr>
+      <td>2015-01-04</td>
+      <td>1664.010</td>
+      <td>3980915</td>
+      <td>161</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="aggregation-to-weekly-level">Aggregation to weekly level</h1>
+
+<p>The target of prediction, namely quantity, are aggregated to weekly level, which is shown in the graph below.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/salesforecast/plots/weekly_agg.jpg" alt="Weekly aggregated sale quantity" /></p>
+
+<h1 id="decomposition">Decomposition</h1>
+
+<p>The logged quantity is then de-composed into three parts, namely seasonal, trend and remainder. The seasonal part repeats itself annually.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/salesforecast/plots/decomp.jpg" alt="Decomposition of logged quantity" /></p>
+
+<h1 id="uni-variate-models">Uni-variate Models</h1>
+
+<h2 id="simple-models">Simple models</h2>
+<p>Four simple models, namely naive method, average method, seasonal naïve method and drift method, are used.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/salesforecast/plots/simple.jpg" alt="Decomposition of logged quantity" /></p>
+
+<h2 id="arima-models">ARIMA models</h2>
+<p>Three simple models, namely simple ARIMA, ARIMA single season and ARIMA double seasons, are used.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/salesforecast/plots/ARIMA.jpg" alt="Decomposition of logged quantity" /></p>
+
+<h2 id="tbats-models">TBATS Models</h2>
+<p>Five TBATS models are used. Their technical details can be found on the <a href="https://zibowangkangyu.github.io/sales_forecast">Project page</a>.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/salesforecast/plots/TBATS.jpg" alt="Decomposition of logged quantity" /></p>
+
+<h2 id="neural-network">Neural Network</h2>
+<p>Two neural network model: one used on raw data and another used on de-trended and de-seasonalized data.</p>
+
+<p><img src="https://zibowangkangyu.github.io/images/salesforecast/plots/nn.jpg" alt="Decomposition of logged quantity" /></p>]]></content><author><name>Mark Wang</name><email>kangyumarkwang@gmail.com</email></author><category term="time series" /><category term="machine learning" /><category term="forecasting" /><summary type="html"><![CDATA[time series, machine learning, forecasting]]></summary></entry></feed>
